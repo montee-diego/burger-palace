@@ -24,7 +24,7 @@ barba.init({
         beginBtn.addEventListener("submit", function (e) {
           e.preventDefault();
           e.target[1].disabled = true;
-          barba.go("/order");
+          barba.go("/burger-palace/order");
         });
       },
     },
@@ -35,7 +35,7 @@ barba.init({
 
         cancelBtn.addEventListener("click", () => {
           cancelBtn.disabled = true;
-          barba.go("/");
+          barba.go("/burger-palace");
         });
 
         orderPrice = 0;
@@ -50,7 +50,7 @@ barba.init({
 
         cancelBtn.addEventListener("click", () => {
           cancelBtn.disabled = true;
-          barba.go("/");
+          barba.go("/burger-palace");
         });
 
         orderPrice = 0;
@@ -72,7 +72,7 @@ barba.init({
 
         orderDoneBtn.addEventListener("click", () => {
           orderDoneBtn.disabled = true;
-          barba.go("/");
+          barba.go("/burger-palace");
         });
       },
     },
@@ -347,9 +347,9 @@ function initOrderPanel(container) {
 
         //Navigate to next page
         if (orderCurrent == orderTotal) {
-          barba.go("/order-review");
+          barba.go("/burger-palace/order-review");
         } else {
-          barba.go("/order");
+          barba.go("/burger-palace/order");
         }
         break;
     }
@@ -388,7 +388,7 @@ function initReviewPanel(container) {
     orderBtn.disabled = true;
 
     //console.log("completed animation goes here.");
-    barba.go("/order-complete");
+    barba.go("/burger-palace/order-complete");
 
     setTimeout(() => {
       orderBtn.disabled = false;
