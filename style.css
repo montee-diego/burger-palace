@@ -1,0 +1,654 @@
+@import url("https://fonts.googleapis.com/css2?family=Fredoka+One&family=Poppins:wght@400;700&display=swap");
+
+/* Globals */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  font-family: "Poppins", sans-serif;
+  overflow: hidden;
+}
+
+img,
+svg {
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Welcome page */
+
+.landing-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.splash {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.splash-icon {
+  max-width: 25%;
+}
+
+.splash-icon img {
+  width: 100%;
+}
+
+.splash-title {
+  align-self: flex-start;
+}
+
+.logo-top {
+  font-family: "Fredoka One", cursive;
+  font-size: 6vw;
+  color: #b83725;
+  transform: translateX(-33%);
+  margin-bottom: 0.5rem;
+}
+
+.splash-title h1 {
+  font-family: "Fredoka One", cursive;
+  font-size: 8vw;
+  color: #b83725;
+}
+
+.splash-animation {
+  max-width: 10%;
+  align-self: flex-end;
+  position: relative;
+  margin-left: 1vw;
+  margin-bottom: 0.5rem;
+  pointer-events: none;
+  user-select: none;
+}
+
+.frie-sauce {
+  width: 100%;
+}
+
+.frie-anim {
+  position: absolute;
+  left: 25%;
+  transform: translateY(-100%);
+  width: 75%;
+}
+
+.frie-bbq {
+  z-index: -1;
+  animation: frie-dip 2s infinite ease-in-out alternate;
+}
+
+.begin-order {
+  margin-top: 3rem;
+}
+
+.begin-order button,
+.begin-order a {
+  width: 10rem;
+  text-decoration: none;
+  background: #e9e9e9;
+  color: black;
+  border: none;
+  border-radius: 5px;
+  padding: 1rem 3.5rem;
+  font-family: "Poppins", sans-serif;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.5s ease-in-out;
+}
+
+.begin-order button:hover,
+.begin-order a:hover {
+  background: #8d69e0;
+  color: white;
+}
+
+.begin-order input {
+  width: 10rem;
+  border: none;
+  padding: 1rem 1rem;
+  margin: 0rem 1rem;
+  font-family: "Poppins", sans-serif;
+  font-size: 1rem;
+  background: #e9e9e9;
+  border-radius: 5px;
+}
+
+.begin-order input:focus {
+  outline: none;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.swipe {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  transform: translateX(-100%);
+}
+
+.swipe img {
+  width: 35%;
+}
+
+.swipe h2 {
+  font-family: "Fredoka One", cursive;
+  font-size: 8vw;
+  color: #b83725;
+  margin-bottom: 2rem;
+}
+
+.swipe1 {
+  background: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 5;
+}
+
+.swipe2 {
+  background: #b83725;
+  z-index: 4;
+}
+
+.swipe3 {
+  background: #fbd544;
+  z-index: 3;
+}
+
+/* Order Page */
+
+.order-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100vh;
+}
+
+nav {
+  min-height: 10vh;
+  display: flex;
+  border-bottom: 1px solid #c9c9c9;
+}
+
+.nav-header {
+  width: 95%;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-header h1 {
+  font-family: "Fredoka One", cursive;
+  font-size: 2.5rem;
+  color: #b83725;
+}
+
+.order-info {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.order-info h2 {
+  font-size: 1.2rem;
+  margin-right: 2vw;
+  white-space: nowrap;
+}
+
+.cancel-order,
+.order-done {
+  text-decoration: none;
+  text-align: center;
+  background: #e9e9e9;
+  color: black;
+  width: 7rem;
+  border: none;
+  border-radius: 5px;
+  padding: 0.5rem 0rem;
+  font-family: "Poppins", sans-serif;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.5s ease-in-out;
+}
+
+.cancel-order:hover,
+.order-done:hover {
+  background: #8d69e0;
+  color: white;
+}
+
+.order-panel {
+  width: 95%;
+  margin: 2vh auto;
+  display: flex;
+  flex: 1;
+  gap: 2.5vw;
+}
+
+.order-opts {
+  min-width: 250px;
+  overflow-y: auto;
+}
+
+.tab {
+  display: none;
+}
+
+.burger-opts-container,
+#nr-burgers {
+  display: block;
+  width: 100%;
+  background: #e9e9e9;
+  font-family: "Poppins", sans-serif;
+  font-size: 1rem;
+  border-radius: 5px;
+  padding: 10px 10px;
+  border: 2px solid #b83725;
+  margin-bottom: 10px;
+}
+
+.opts-separator {
+  display: block;
+  width: 100%;
+  height: 1px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #f27272;
+}
+
+.order-preview-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  border: 2px solid #b83725;
+  border-radius: 5px;
+  position: relative;
+  overflow: hidden;
+}
+
+.order-preview {
+  width: 50%;
+  height: 100%;
+  max-width: 500px;
+  position: relative;
+}
+
+.order-preview-container::after {
+  content: "Preview";
+  font-family: "Fredoka One", cursive;
+  font-size: 1.5rem;
+  color: white;
+  background: #b83725;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 5px 0px 5px 0px;
+  padding: 5px 20px;
+  transform: translate(-2px, -2px);
+}
+
+.plate {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  transform: translateY(-20%);
+}
+
+.ingredient {
+  width: 50%;
+  position: absolute;
+  left: 25%;
+  bottom: 0;
+  z-index: 1;
+  opacity: 0;
+}
+
+.bbq {
+  transform: scale(50%);
+  z-index: 20;
+}
+
+.fries {
+  z-index: 1;
+}
+
+.drink {
+  transform: scale(60%);
+  z-index: 1;
+}
+
+footer {
+  min-height: 10vh;
+  border-top: 1px solid #c9c9c9;
+  width: 100%;
+  bottom: 0;
+  display: flex;
+}
+
+.footer-info {
+  width: 95%;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.next-btn,
+.submit-order {
+  text-decoration: none;
+  pointer-events: none;
+  background: #e9e9e9;
+  color: #a7a7a7;
+  width: 7rem;
+  border: none;
+  border-radius: 5px;
+  padding: 0.5rem 0rem;
+  font-family: "Poppins", sans-serif;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.5s ease-in-out;
+}
+
+.next-btn.enabled,
+.submit-order.enabled {
+  pointer-events: all;
+  color: black;
+}
+
+.next-btn:hover,
+.submit-order:hover {
+  background: #8d69e0;
+  color: white;
+}
+
+.prev-btn {
+  text-decoration: none;
+  background: white;
+  color: #a7a7a7;
+  width: 7rem;
+  border: none;
+  border-radius: 5px;
+  padding: 0.5rem 0rem;
+  font-family: "Poppins", sans-serif;
+  font-size: 1rem;
+  cursor: pointer;
+  pointer-events: none;
+  transition: all 0.5s ease-in-out;
+}
+
+.prev-btn.enabled {
+  pointer-events: all;
+  color: black;
+}
+
+.prev-btn:hover {
+  background: #e9e9e9;
+}
+
+.price-display {
+  font-size: 1.2rem;
+  white-space: nowrap;
+  margin-right: 10px;
+}
+
+/* Order Review */
+
+.review-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1vh;
+  width: 95%;
+  margin: 2vh auto;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.burger-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 4rem;
+  border: 2px solid #c25739;
+  border-radius: 5px;
+  position: relative;
+}
+
+.burger-item h2 {
+  font-size: 1rem;
+  font-weight: 400;
+  margin: 0px 10px;
+  flex: 1;
+}
+
+.burger-item h2.item-info-big {
+  flex: 2;
+}
+
+.burger-item h1,
+.burger-item h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  text-align: right;
+  margin-right: 10px;
+}
+
+.burger-item h1 {
+  width: 2rem;
+}
+
+.burger-item h3 {
+  width: 4rem;
+}
+
+.burger-item button {
+  font-family: "Poppins", sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  background-color: #c25739;
+  border: none;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+  color: white;
+  align-self: stretch;
+  padding: 0px 15px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.order-controls {
+  display: flex;
+  align-items: center;
+  gap: 1vw;
+}
+
+.order-controls form {
+  font-size: 1rem;
+  margin-right: 10px;
+}
+
+/* Order Complete */
+
+.order-complete {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  position: relative;
+}
+
+.order-complete button {
+  position: absolute;
+  top: 1rem;
+  right: 2rem;
+  font-family: "Poppins", sans-serif;
+  font-size: 3rem;
+  color: #8d8d8d;
+  background-color: transparent;
+  border: none;
+}
+
+.order-logo {
+  width: 50%;
+  max-width: 256px;
+}
+
+.order-logo img {
+  width: 100%;
+}
+
+.order-message {
+  font-size: 2rem;
+  margin: 2rem 0rem;
+  text-align: center;
+}
+
+.order-number {
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+/* Animations */
+
+@keyframes frie-dip {
+  from {
+    transform: translateY(-100%) rotate(0deg);
+  }
+  to {
+    transform: translateY(-55%) rotate(-15deg);
+  }
+}
+
+/* Mobile View */
+
+@media screen and (orientation: portrait) {
+  .logo-top {
+    font-size: 9vw;
+  }
+
+  .splash-icon {
+    max-width: 35%;
+  }
+
+  .splash-title h1 {
+    font-size: 11vw;
+  }
+
+  .splash-animation {
+    max-width: 15%;
+  }
+
+  .nav-header h1 {
+    font-size: 2rem;
+  }
+
+  .order-info h2 {
+    font-size: 1rem;
+  }
+
+  .begin-order {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1vh;
+  }
+
+  .begin-order input {
+    text-align: center;
+  }
+
+  .order-panel {
+    flex-direction: column-reverse;
+    gap: 2.5vh;
+  }
+
+  .order-opts {
+    flex: 1;
+    width: 100%;
+    max-height: 35vh;
+  }
+
+  .order-preview-container {
+    min-height: 35vh;
+    max-height: 35vh;
+    margin: 0;
+    align-items: flex-end;
+  }
+
+  .price-display {
+    font-size: 1rem;
+  }
+
+  .cancel-order,
+  .order-done,
+  .prev-btn,
+  .next-btn,
+  .submit-order {
+    width: 5rem;
+  }
+
+  .burger-item {
+    flex-wrap: wrap;
+  }
+
+  .burger-item h1 {
+    margin: 0;
+    width: 2.5rem;
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 700;
+    background-color: #c25739;
+    border-top-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+    color: white;
+  }
+
+  .burger-item h2:nth-child(2) {
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  .burger-item h2.item-info-big {
+    flex-basis: 100%;
+  }
+
+  .burger-item h3 {
+    flex-basis: 100%;
+  }
+
+  .burger-item button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 3px;
+  }
+}
