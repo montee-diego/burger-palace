@@ -35,7 +35,7 @@ barba.init({
 
         cancelBtn.addEventListener("click", () => {
           cancelBtn.disabled = true;
-          barba.go("../");
+          barba.go("./");
         });
 
         orderPrice = 0;
@@ -50,7 +50,7 @@ barba.init({
 
         cancelBtn.addEventListener("click", () => {
           cancelBtn.disabled = true;
-          barba.go("../");
+          barba.go("./");
         });
 
         orderPrice = 0;
@@ -72,7 +72,7 @@ barba.init({
 
         orderDoneBtn.addEventListener("click", () => {
           orderDoneBtn.disabled = true;
-          barba.go("../");
+          barba.go("./");
         });
       },
     },
