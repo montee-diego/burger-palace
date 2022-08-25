@@ -4,8 +4,17 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="/burger-palace/img/icon.svg" type="image/x-icon" />
-    <link rel="stylesheet" href="/burger-palace/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Poppins:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" href="./assets/icon.svg" />
+    <link rel="stylesheet" href="./css/style.css" />
+    <script src="./js/barba.min.js" defer></script>
+    <script src="./js/gsap.min.js" defer></script>
+    <script src="./js/app.js" defer></script>
     <title>Burger Palace</title>
   </head>
   <body data-barba="wrapper">
@@ -13,32 +22,38 @@
       <h1 class="logo-top">Burger</h1>
       <div class="splash">
         <div class="splash-icon">
-          <img src="/burger-palace/img/splash-logo.svg" alt="burger palace logo" />
+          <img src="./assets/splash-logo.svg" alt="burger palace logo" />
         </div>
         <div class="splash-title">
           <h1>Palace</h1>
         </div>
         <div class="splash-animation">
-          <img src="/burger-palace/img/frie-bbq.svg" class="frie-anim frie-bbq" alt="" />
-          <img src="/burger-palace/img/sauce-bbq.svg" class="frie-sauce" alt="" />
+          <img src="./assets/frie-bbq.svg" class="frie-anim frie-bbq" alt="" />
+          <img src="./assets/sauce-bbq.svg" class="frie-sauce" alt="" />
         </div>
       </div>
       <form class="begin-order" method="post">
         <label for="burgers">Burgers</label>
-        <input type="number" name="burgers" min="1" max="30" value="1" class="nr-of-orders" required />
+        <input
+          type="number"
+          pattern="[0-9]*"
+          inputmode="numeric"
+          name="burgers"
+          min="1"
+          max="30"
+          value="1"
+          class="nr-of-orders"
+          required
+        />
         <button type="submit">Begin</button>
       </form>
     </main>
 
     <div class="swipe swipe1">
       <h2>Burger Palace</h2>
-      <img src="/burger-palace/img/splash-logo.svg" alt="" />
+      <img src="./assets/splash-logo.svg" alt="" />
     </div>
     <div class="swipe swipe2"></div>
     <div class="swipe swipe3"></div>
-
-    <script src="/burger-palace/js/barba.min.js"></script>
-    <script src="/burger-palace/js/gsap.min.js"></script>
-    <script src="/burger-palace/app.js"></script>
   </body>
 </html>
