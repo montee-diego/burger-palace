@@ -43,6 +43,7 @@ const setHomeContext = () => {
 
 // Barba.js configuration
 barba.init({
+  preventRunning: true,
   views: [
     {
       namespace: "home",
@@ -68,10 +69,16 @@ barba.init({
 
         if (orderTotal === undefined) {
           setImageSrcPath(next.container, "../");
-          barba.go("./../");
+          //barba.go("/");
         } else {
           setImageSrcPath(next.container, "./");
         }
+      },
+      afterEnter() {
+        if (orderTotal === undefined) {
+          barba.go("../");
+        }
+        console.log("after");
       },
     },
   ],
