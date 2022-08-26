@@ -74,10 +74,12 @@ barba.init({
           // const path = window.location.href;
           // const path2 = path.slice(0, -6);
 
-          const url = window.location.href.replace(/\/$/, "");
+          const url = window.location.pathname.replace(/\/$/, "");
+          console.log(url);
           const map = url.substring(url.lastIndexOf("/"));
 
-          const path = window.location.href.slice(0, -map.length);
+          const path = window.location.pathname.slice(0, -map.length);
+          //console.log(path);
 
           console.log("redirect to: ", path);
           setImageSrcPath(next.container, "../");
@@ -86,13 +88,13 @@ barba.init({
           setImageSrcPath(next.container, "./");
         }
       },
-      afterEnter() {
-        console.log(window.location.href);
-        if (orderTotal === undefined) {
-          //barba.go("../");
-        }
-        console.log("after");
-      },
+      // afterEnter() {
+      //   console.log(window.location.href);
+      //   if (orderTotal === undefined) {
+      //     //barba.go("../");
+      //   }
+      //   console.log("after");
+      // },
     },
   ],
   transitions: [
