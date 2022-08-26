@@ -11,7 +11,7 @@ const setImageSrcPath = (container, path) => {
   const images = container.querySelectorAll("img");
 
   images.forEach(image => {
-    image.setAttribute("src", path + image.dataset.src);
+    image.setAttribute("src", path === "" ? "" : path + image.dataset.src);
   });
 };
 
@@ -68,14 +68,9 @@ barba.init({
       beforeLeave({ next }) {
         console.log("beforeLeave: home");
       },
-      afterLeave({ next }) {
+      afterLeave({ current }) {
         console.log("afterLeave: home");
-        if (orderTotal === undefined) {
-          setImageSrcPath(next.container, "../");
-          //setRedirectToHome(window.location);
-        } else {
-          setImageSrcPath(next.container, "./");
-        }
+        setImageSrcPath(current.container, "");
       },
     },
     {
@@ -84,10 +79,10 @@ barba.init({
         console.log("beforeEnter: order");
 
         if (orderTotal === undefined) {
-          //setImageSrcPath(next.container, "../");
+          setImageSrcPath(next.container, "../");
           setRedirectToHome(window.location);
         } else {
-          //setImageSrcPath(next.container, "./");
+          setImageSrcPath(next.container, "./");
         }
       },
     },
