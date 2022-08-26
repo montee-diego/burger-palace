@@ -7,11 +7,11 @@ let orderTotal;
   helper function sets the paths relative to the current barba-namespace rather
   than the URL
 */
-const setImageSrcPath = path => {
-  const images = document.querySelectorAll("img");
+const setImageSrcPath = (container, path) => {
+  const images = container.querySelectorAll("img");
 
   images.forEach(image => {
-    image.setAttribute("src", path + image.getAttribute("src"));
+    image.setAttribute("src", path + image.dataset.src);
   });
 };
 
@@ -48,7 +48,7 @@ barba.init({
       namespace: "home",
       beforeEnter({ next }) {
         console.log("beforeEnter: home");
-        setImageSrcPath("./");
+        setImageSrcPath(next.container, "./");
         setHomeContext();
 
         // const testBtn = document.querySelector(".test");
@@ -64,10 +64,10 @@ barba.init({
       beforeEnter({ next }) {
         console.log("beforeEnter: order");
         console.log(orderTotal);
-        setImageSrcPath("../");
+        setImageSrcPath(next.container, "../");
 
         if (orderTotal === undefined) {
-          barba.go("../");
+          //barba.go("../");
         }
       },
     },
