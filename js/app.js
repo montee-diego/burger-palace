@@ -15,6 +15,19 @@ const setImageSrcPath = (container, path) => {
   });
 };
 
+/*
+  Workaround to redirect home when using barba.js
+  This helper function will make redirect work with github pages, local server and
+  any other hosting site.
+*/
+const setRedirectToHome = ({ pathname }) => {
+  const url = pathname.replace(/\/$/, "");
+  const path = url.substring(url.lastIndexOf("/"));
+  const to = pathname.slice(0, -path.length);
+
+  barba.go(to);
+};
+
 // Home page
 const setHomeContext = () => {
   const decreaseOrderBtn = document.querySelector(".decrease-order");
@@ -43,7 +56,6 @@ const setHomeContext = () => {
 
 // Barba.js configuration
 barba.init({
-  debug: true,
   preventRunning: true,
   views: [
     {
@@ -52,49 +64,32 @@ barba.init({
         console.log("beforeEnter: home");
         setImageSrcPath(next.container, "./");
         setHomeContext();
-
-        // const testBtn = document.querySelector(".test");
-        // testBtn.addEventListener("click", setTest);
       },
       beforeLeave({ next }) {
-        // const testBtn = document.querySelector(".test");
-        // testBtn.removeEventListener("click", setTest);
+        console.log("beforeLeave: home");
+      },
+      afterLeave({ next }) {
+        console.log("afterLeave: home");
+        if (orderTotal === undefined) {
+          setImageSrcPath(next.container, "../");
+          //setRedirectToHome(window.location);
+        } else {
+          setImageSrcPath(next.container, "./");
+        }
       },
     },
     {
       namespace: "order",
       beforeEnter({ next }) {
         console.log("beforeEnter: order");
-        console.log(orderTotal);
-        //setImageSrcPath(next.container, "../");
-        console.log(window.location.href);
 
         if (orderTotal === undefined) {
-          //window.location.href = "../";
-          // const path = window.location.href;
-          // const path2 = path.slice(0, -6);
-
-          const url = window.location.pathname.replace(/\/$/, "");
-          console.log(url);
-          const map = url.substring(url.lastIndexOf("/"));
-
-          const path = window.location.pathname.slice(0, -map.length);
-          //console.log(path);
-
-          console.log("redirect to: ", path);
-          setImageSrcPath(next.container, "../");
-          barba.go(path);
+          //setImageSrcPath(next.container, "../");
+          setRedirectToHome(window.location);
         } else {
-          setImageSrcPath(next.container, "./");
+          //setImageSrcPath(next.container, "./");
         }
       },
-      // afterEnter() {
-      //   console.log(window.location.href);
-      //   if (orderTotal === undefined) {
-      //     //barba.go("../");
-      //   }
-      //   console.log("after");
-      // },
     },
   ],
   transitions: [
