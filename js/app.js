@@ -67,16 +67,27 @@ barba.init({
         console.log("beforeEnter: order");
         console.log(orderTotal);
         //setImageSrcPath(next.container, "../");
+        console.log(window.location.href);
 
         if (orderTotal === undefined) {
-          window.location.href = "../";
+          //window.location.href = "../";
+          // const path = window.location.href;
+          // const path2 = path.slice(0, -6);
+
+          const url = window.location.href.replace(/\/$/, "");
+          const map = url.substring(url.lastIndexOf("/"));
+
+          const path = window.location.href.slice(0, -map.length);
+
+          console.log("redirect to: ", path);
           setImageSrcPath(next.container, "../");
-          //barba.go("/");
+          barba.go(path);
         } else {
           setImageSrcPath(next.container, "./");
         }
       },
       afterEnter() {
+        console.log(window.location.href);
         if (orderTotal === undefined) {
           //barba.go("../");
         }
