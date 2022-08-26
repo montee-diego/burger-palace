@@ -64,10 +64,13 @@ barba.init({
       beforeEnter({ next }) {
         console.log("beforeEnter: order");
         console.log(orderTotal);
-        setImageSrcPath(next.container, "../");
+        //setImageSrcPath(next.container, "../");
 
         if (orderTotal === undefined) {
-          //barba.go("../");
+          setImageSrcPath(next.container, "../");
+          barba.go("./../");
+        } else {
+          setImageSrcPath(next.container, "./");
         }
       },
     },
