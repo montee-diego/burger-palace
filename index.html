@@ -18,42 +18,38 @@
     <title>Burger Palace</title>
   </head>
   <body data-barba="wrapper">
-    <main class="landing-page" data-barba="container" data-barba-namespace="home">
-      <h1 class="logo-top">Burger</h1>
-      <div class="splash">
-        <div class="splash-icon">
-          <img src="./assets/splash-logo.svg" alt="burger palace logo" />
-        </div>
-        <div class="splash-title">
+    <main data-barba="container" data-barba-namespace="home" class="home">
+      <div class="logo">
+        <h1>Burger</h1>
+        <div class="splash">
+          <img src="assets/splash-logo.svg" alt="burger palace logo" />
           <h1>Palace</h1>
-        </div>
-        <div class="splash-animation">
-          <img src="./assets/frie-bbq.svg" class="frie-anim frie-bbq" alt="" />
-          <img src="./assets/sauce-bbq.svg" class="frie-sauce" alt="" />
+          <div class="frie-anim-wrapper">
+            <img src="assets/frie-bbq.svg" class="frie-bbq frie-anim" alt="" />
+            <img src="assets/sauce-bbq.svg" class="frie-sauce" alt="" />
+          </div>
         </div>
       </div>
-      <form class="begin-order" method="post">
-        <label for="burgers">Burgers</label>
-        <input
-          type="number"
-          pattern="[0-9]*"
-          inputmode="numeric"
-          name="burgers"
-          min="1"
-          max="30"
-          value="1"
-          class="nr-of-orders"
-          required
-        />
-        <button type="submit">Begin</button>
+
+      <form id="begin-order">
+        <div class="input-order">
+          <button type="button" class="decrease-order">
+            <img src="assets/minus-solid.svg" alt="-" />
+          </button>
+          <input id="nr-of-orders" type="text" value="1" size="5" readonly />
+          <button type="button" class="increase-order">
+            <img src="assets/plus-solid.svg" alt="+" />
+          </button>
+        </div>
+        <button type="submit">Order</button>
       </form>
     </main>
 
-    <div class="swipe swipe1">
-      <h2>Burger Palace</h2>
-      <img src="./assets/splash-logo.svg" alt="" />
+    <div class="page-anim layer-a">
+      <span>Burger Palace</span>
+      <img src="assets/splash-logo.svg" alt="" />
     </div>
-    <div class="swipe swipe2"></div>
-    <div class="swipe swipe3"></div>
+    <div class="page-anim layer-b"></div>
+    <div class="page-anim layer-c"></div>
   </body>
 </html>

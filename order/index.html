@@ -4,163 +4,30 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Poppins:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" href="../assets/icon.svg" />
+    <link rel="stylesheet" href="../css/style.css" />
+    <script src="../js/barba.min.js" defer></script>
+    <script src="../js/gsap.min.js" defer></script>
+    <script src="../js/app.js" defer></script>
     <title>Burger Palace | Order</title>
   </head>
   <body data-barba="wrapper">
-    <main class="order-page" data-barba="container" data-barba-namespace="order">
-      <nav>
-        <div class="nav-header">
-          <h1>Burger Palace</h1>
-          <div class="order-info">
-            <h2></h2>
-            <button class="cancel-order">Cancel</button>
-        </div>
-      </nav>
-
-      <section class="order-panel">
-        <div class="order-opts">
-          <form>
-            <div class="tab">
-              <label for="burger-beef" class="burger-opts-container">
-                <input type="radio" id="burger-beef" name="burger-opt" value="beef" data-price="3" data-display="Beef Burger" />
-                <span>Beef</span>
-              </label>
-              <label for="burger-chicken" class="burger-opts-container">
-                <input type="radio" id="burger-chicken" name="burger-opt" value="chicken" data-price="3" data-display="Chicken Burger" />
-                <span>Chicken</span>
-              </label>
-              <label for="burger-vegan" class="burger-opts-container">
-                <input type="radio" id="burger-vegan" name="burger-opt" value="vegan" data-price="3" data-display="Vegan Burger" />
-                <span>Vegan</span>
-              </label>
-            </div>
-            <div class="tab">
-              <label for="no-cheese" class="burger-opts-container">
-                <input type="radio" id="no-cheese" name="cheese-opt" value="no-cheese" data-price="0" data-display="No Cheese" checked />
-                <span>No Cheese</span>
-              </label>
-              <label for="swiss" class="burger-opts-container">
-                <input type="radio" id="swiss" name="cheese-opt" value="swiss" data-price="1.25" data-display="Swiss" />
-                <span>Swiss (+$1.25)</span>
-              </label>
-              <label for="cheddar" class="burger-opts-container">
-                <input type="radio" id="cheddar" name="cheese-opt" value="cheddar" data-price="1" data-display="Cheddar" />
-                <span>Cheddar (+$1.00)</span>
-              </label>
-            </div>
-
-            <div class="tab">
-              <label for="eggs" class="burger-opts-container">
-                <input type="checkbox" id="eggs" name="eggs" value="eggs" data-price="0.50" data-display="Eggs" />
-                <span>Eggs (+$0.50)</span>
-              </label>
-              <label for="bacon" class="burger-opts-container">
-                <input type="checkbox" id="bacon" name="bacon" value="bacon" data-price="0.75" data-display="Bacon" />
-                <span>Bacon (+$0.75)</span>
-              </label>
-              <label for="salami" class="burger-opts-container">
-                <input type="checkbox" id="salami" name="salami" value="salami" data-price="0.50" data-display="Salami" />
-                <span>Salami (+$0.50)</span>
-              </label>
-              <label for="onions" class="burger-opts-container">
-                <input type="checkbox" id="onions" name="onions" value="onions" data-price="0.15" data-display="Onions" />
-                <span>Onions (+$0.15)</span>
-              </label>
-              <label for="tomato" class="burger-opts-container">
-                <input type="checkbox" id="tomato" name="tomato" value="tomato" data-price="0.15" data-display="Tomato" />
-                <span>Tomato (+$0.15)</span>
-              </label>
-              <label for="lettuce" class="burger-opts-container">
-                <input type="checkbox" id="lettuce" name="lettuce" value="lettuce" data-price="0.10" data-display="Lettuce" />
-                <span>Lettuce (+$0.10)</span>
-              </label>
-              <label for="mushrooms" class="burger-opts-container">
-                <input type="checkbox" id="mushrooms" name="mushrooms" value="mushrooms" data-price="0.20" data-display="Mushrooms" />
-                <span>Mushrooms (+$0.20)</span>
-              </label>
-            </div>
-
-            <div class="tab">
-              <label for="no-side" class="burger-opts-container">
-                <input type="radio" id="no-side" name="sides" value="no-side" data-price="0" data-display="No Side" checked />
-                <span>No Sides</span>
-              </label>
-              <label for="fries" class="burger-opts-container">
-                <input type="radio" id="fries" name="sides" value="fries" data-price="2.50" data-display="Fries" />
-                <span>Fries (+$2.50)</span>
-              </label>
-            </div>
-
-            <div class="tab">
-              <label for="no-drink" class="burger-opts-container">
-                <input type="radio" id="no-drink" name="drink" value="no-drink" data-price="0" data-display="No Drink" checked />
-                <span>No Drink</span>
-              </label>
-              <label for="drink-cola" class="burger-opts-container">
-                <input type="radio" id="drink-cola" name="drink" value="cola" data-price="1.50" data-display="Cola" />
-                <span>Cola (+$1.50)</span>
-              </label>
-              <label for="drink-cola-zero" class="burger-opts-container">
-                <input type="radio" id="drink-cola-zero" name="drink" value="cola-zero" data-price="2" data-display="Cola Zero" />
-                <span>Cola Zero (+$2.00)</span>
-              </label>
-              <label for="drink-lime" class="burger-opts-container">
-                <input type="radio" id="drink-lime" name="drink" value="lime" data-price="1.50" data-display="Lime" />
-                <span>Lime (+$1.50)</span>
-              </label>
-              <label for="drink-orange" class="burger-opts-container">
-                <input type="radio" id="drink-orange" name="drink" value="orange" data-price="1.50" data-display="Orange" />
-                <span>Orange (+$1.50)</span>
-              </label>
-              <label for="drink-soda" class="burger-opts-container">
-                <input type="radio" id="drink-soda" name="drink" value="soda" data-price="1" data-display="Soda" />
-                <span>Soda (+$1.00)</span>
-              </label>
-            </div>
-          </form>
-        </div>
-        <div class="order-preview-container">
-          <div class="order-preview">
-            <img src="./assets/order/burger-beef.svg" class="ingredient beef" alt="" />
-            <img src="./assets/order/burger-chicken.svg" class="ingredient chicken" alt="" />
-            <img src="./assets/order/burger-vegan.svg" class="ingredient vegan" alt="" />
-            <img src="./assets/order/cheese-swiss.svg" class="ingredient cheese swiss" alt="" />
-            <img src="./assets/order/cheese-cheddar.svg" class="ingredient cheese cheddar" alt="" />
-            <img src="./assets/order/extra-eggs.svg" class="ingredient extra eggs" alt="" />
-            <img src="./assets/order/extra-bacon.svg" class="ingredient extra bacon" alt="" />
-            <img src="./assets/order/extra-salami.svg" class="ingredient extra salami" alt="" />
-            <img src="./assets/order/extra-onions.svg" class="ingredient extra onions" alt="" />
-            <img src="./assets/order/extra-tomato.svg" class="ingredient extra tomato" alt="" />
-            <img src="./assets/order/extra-lettuce.svg" class="ingredient extra lettuce" alt="" />
-            <img src="./assets/order/extra-mushrooms.svg" class="ingredient extra mushrooms" alt="" />
-            <img src="./assets/order/side-fries.svg" class="ingredient side fries" alt="" />
-            <img src="./assets/sauce-bbq.svg" class="ingredient side bbq" alt="" />
-            <img src="./assets/order/drink-cola.svg" class="ingredient drink cola" alt="" />
-            <img src="./assets/order/drink-cola-zero.svg" class="ingredient drink cola-zero" alt="" />
-            <img src="./assets/order/drink-lime.svg" class="ingredient drink lime" alt="" />
-            <img src="./assets/order/drink-orange.svg" class="ingredient drink orange" alt="" />
-            <img src="./assets/order/drink-soda.svg" class="ingredient drink soda" alt="" />
-            <img src="./assets/order/bread-top.svg" class="ingredient bread-top" alt="" />
-            <img src="./assets/order/bread-bottom.svg" class="ingredient bread" alt="" />
-            <img src="./assets/order/base-plate.svg" class="plate" alt="" />
-          </div>
-        </div>
-      </section>
-
-      <footer>
-        <div class="footer-info">
-          <div>
-            <h4 class="price-display"></h4>
-          </div>
-          <div class="order-controls">
-            <button class="prev-btn">Previous</button>
-            <button class="next-btn">Next</button>
-          </div>
-        </div>
-      </footer>
+    <main data-barba="container" data-barba-namespace="order">
+      <h1>test</h1>
+      <img src="assets/splash-logo.svg" alt="burger logo" />
     </main>
 
-    <script src="../js/barba.min.js"></script>
-    <script src="../app.js"></script>
+    <div class="page-anim layer-a">
+      <span>Burger Palace</span>
+      <img src="assets/splash-logo.svg" alt="" />
+    </div>
+    <div class="page-anim layer-b"></div>
+    <div class="page-anim layer-c"></div>
   </body>
 </html>
