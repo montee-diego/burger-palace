@@ -9,12 +9,22 @@ let orderTotal;
 */
 const setImageSrcPath = (container, path) => {
   const images = container.querySelectorAll("img");
+  const imageTransition = document.querySelectorAll(".page-anim img");
+  const imageIcon = document.querySelector("head link[rel='icon']");
+
+  console.log(imageIcon);
 
   console.log("Updating image src with: " + path);
 
   images.forEach(image => {
     image.setAttribute("src", path === "" ? "" : path + image.dataset.src);
   });
+
+  imageTransition.forEach(image => {
+    image.setAttribute("src", path === "" ? "" : path + image.dataset.src);
+  });
+
+  imageIcon.href = path + imageIcon.dataset.href;
 };
 
 /*
@@ -69,7 +79,7 @@ barba.init({
       },
       beforeLeave({ next }) {
         console.log("beforeLeave: home");
-        setImageSrcPath(current.container, "");
+        //setImageSrcPath(current.container, "");
       },
       afterLeave({ current }) {
         console.log("beforeLeave: home");
@@ -82,10 +92,10 @@ barba.init({
         console.log("beforeEnter: order");
 
         if (orderTotal === undefined) {
-          //setImageSrcPath(next.container, "../");
+          setImageSrcPath(next.container, "../");
           setRedirectToHome(window.location);
         } else {
-          //setImageSrcPath(next.container, "./");
+          setImageSrcPath(next.container, "./");
         }
       },
     },
