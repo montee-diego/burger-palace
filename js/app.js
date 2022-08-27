@@ -79,10 +79,10 @@ barba.init({
     },
     {
       namespace: "order",
-      beforeEnter({ next }) {
+      beforeEnter({ current, next }) {
         console.log("beforeEnter: order");
 
-        if (orderTotal === undefined) {
+        if (current.container === null) {
           setImageSrcPath(next.container, "../");
           setRedirectToHome(window.location);
         } else {
