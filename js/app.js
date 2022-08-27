@@ -10,8 +10,10 @@ let orderTotal;
 const setImageSrcPath = (container, path) => {
   const images = container.querySelectorAll("img");
 
+  console.log("Updating image src with: " + path);
+
   images.forEach(image => {
-    image.setAttribute("src", path + image.dataset.src);
+    image.setAttribute("src", path === "" ? "" : path + image.dataset.src);
   });
 };
 
@@ -20,14 +22,12 @@ const setImageSrcPath = (container, path) => {
   This helper function will make redirect work with github pages, local server and
   any other hosting site.
 */
-const getNamespacePath = ({ pathname }) => {
+const setRedirectToHome = ({ pathname }) => {
   const url = pathname.replace(/\/$/, "");
   const path = url.substring(url.lastIndexOf("/"));
+  const to = pathname.slice(0, -path.length);
 
-  return pathname.slice(0, -path.length);
-  //const to = pathname.slice(0, -path.length);
-
-  //barba.go(to);
+  barba.go(to);
 };
 
 // Home page
@@ -63,32 +63,28 @@ barba.init({
     {
       namespace: "home",
       beforeEnter({ next }) {
-        const namespacePath = getNamespacePath(window.location);
-
         console.log("beforeEnter: home");
-        setImageSrcPath(next.container, namespacePath);
+        setImageSrcPath(next.container, "./");
         setHomeContext();
       },
       beforeLeave({ next }) {
         console.log("beforeLeave: home");
       },
-      // afterLeave({ current }) {
-      //   console.log("afterLeave: home");
-      //   setImageSrcPath(current.container, "");
-      // },
+      afterLeave({ current }) {
+        console.log("beforeLeave: home");
+        //setImageSrcPath(current.container, "");
+      },
     },
     {
       namespace: "order",
       beforeEnter({ next }) {
-        const namespacePath = getNamespacePath(window.location);
         console.log("beforeEnter: order");
 
         if (orderTotal === undefined) {
-          setImageSrcPath(next.container, namespacePath + "order");
-          barba.go(namespacePath);
-          //setRedirectToHome(window.location);
+          //setImageSrcPath(next.container, "../");
+          setRedirectToHome(window.location);
         } else {
-          setImageSrcPath(next.container, namespacePath);
+          //setImageSrcPath(next.container, "./");
         }
       },
     },
