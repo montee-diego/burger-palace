@@ -69,6 +69,7 @@ barba.init({
       },
       beforeLeave({ next }) {
         console.log("beforeLeave: home");
+        setImageSrcPath(current.container, "");
       },
       afterLeave({ current }) {
         console.log("beforeLeave: home");
