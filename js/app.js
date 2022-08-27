@@ -10,7 +10,7 @@ let orderTotal;
 const setImageSrcPath = (container, path) => {
   const images = container.querySelectorAll("img");
   const imageTransition = document.querySelectorAll(".page-anim img");
-  const imageIcon = document.querySelector("head link[rel='icon']");
+  //const imageIcon = document.querySelector("head link[rel='icon']");
 
   images.forEach(image => {
     image.setAttribute("src", path + image.dataset.src);
@@ -20,6 +20,11 @@ const setImageSrcPath = (container, path) => {
     image.setAttribute("src", path + image.dataset.src);
   });
 
+  //imageIcon.setAttribute("href", path + imageIcon.dataset.href);
+};
+
+const setIconHref = path => {
+  const imageIcon = document.querySelector("head link[rel='icon']");
   imageIcon.setAttribute("href", path + imageIcon.dataset.href);
 };
 
@@ -71,18 +76,21 @@ barba.init({
     {
       namespace: "home",
       beforeEnter({ next }) {
-        console.log("beforeEnter: home ");
+        console.log("beforeEnter: home");
+        setIconHref("./");
         setImageSrcPath(next.container, "./");
         setHomeContext();
       },
       beforeLeave({ next }) {
         console.log("beforeLeave: home");
+        setIconHref("../");
       },
     },
     {
       namespace: "order",
       beforeEnter({ current, next }) {
         console.log("beforeEnter: order");
+        //setIconHref("../");
 
         if (current.container === null) {
           setImageSrcPath(next.container, "../");
