@@ -33,7 +33,7 @@ const setRedirectToHome = ({ pathname }) => {
   const path = url.substring(url.lastIndexOf("/"));
   const to = pathname.slice(0, -path.length);
 
-  //barba.go(to);
+  barba.go(to);
 };
 
 // Home page
