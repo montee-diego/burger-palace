@@ -71,7 +71,7 @@ barba.init({
     {
       namespace: "home",
       beforeEnter({ next }) {
-        console.log("beforeEnter: home");
+        console.log("beforeEnter: home ");
         setImageSrcPath(next.container, "./");
         setHomeContext();
       },
