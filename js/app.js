@@ -23,12 +23,6 @@ const setImageSrcPath = (container, path) => {
   //imageIcon.setAttribute("href", path + imageIcon.dataset.href);
 };
 
-const setIconHref = path => {
-  const imageIcon = document.querySelector("head link[rel='icon']");
-
-  imageIcon.setAttribute("href", path + imageIcon.dataset.href);
-};
-
 /*
   Workaround to redirect home when using barba.js
   This helper function will make redirect work with github pages, local server and
@@ -77,7 +71,6 @@ barba.init({
       beforeEnter({ next }) {
         console.log("beforeEnter: home");
         setImageSrcPath(next.container, "./");
-        setIconHref("./");
         setHomeContext();
       },
       beforeLeave({ next }) {
@@ -88,7 +81,6 @@ barba.init({
       namespace: "order",
       beforeEnter({ current, next }) {
         console.log("beforeEnter: order");
-        setIconHref("../");
 
         if (current.container === null) {
           setImageSrcPath(next.container, "../");
