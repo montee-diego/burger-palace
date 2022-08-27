@@ -23,10 +23,10 @@ const setImageSrcPath = (container, path) => {
   //imageIcon.setAttribute("href", path + imageIcon.dataset.href);
 };
 
-const setIconHref = path => {
-  const imageIcon = document.querySelector("head link[rel='icon']");
-  imageIcon.setAttribute("href", path + imageIcon.dataset.href);
-};
+// const setIconHref = path => {
+//   const imageIcon = document.querySelector("head link[rel='icon']");
+//   imageIcon.setAttribute("href", path + imageIcon.dataset.href);
+// };
 
 /*
   Workaround to redirect home when using barba.js
@@ -77,13 +77,13 @@ barba.init({
       namespace: "home",
       beforeEnter({ next }) {
         console.log("beforeEnter: home");
-        setIconHref("./");
+        //setIconHref("./");
         setImageSrcPath(next.container, "./");
         setHomeContext();
       },
       beforeLeave({ next }) {
         console.log("beforeLeave: home");
-        setIconHref("../");
+        //setIconHref("./order/");
       },
     },
     {
@@ -97,6 +97,12 @@ barba.init({
           setRedirectToHome(window.location);
         } else {
           setImageSrcPath(next.container, "./");
+
+          const cancelBtn = next.container.querySelector(".cancel-order");
+          cancelBtn.addEventListener("click", () => {
+            //setRedirectToHome(window.location);
+            barba.go("./");
+          });
         }
       },
     },
