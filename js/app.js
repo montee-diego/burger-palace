@@ -10,7 +10,7 @@ let orderTotal;
 const setImageSrcPath = (container, path) => {
   const images = container.querySelectorAll("img");
   const imageTransition = document.querySelectorAll(".page-anim img");
-  //const imageIcon = document.querySelector("head link[rel='icon']");
+  const imageIcon = document.querySelector("head link[rel='icon']");
 
   images.forEach(image => {
     image.setAttribute("src", path + image.dataset.src);
@@ -20,7 +20,7 @@ const setImageSrcPath = (container, path) => {
     image.setAttribute("src", path + image.dataset.src);
   });
 
-  //imageIcon.setAttribute("href", path + imageIcon.dataset.href);
+  imageIcon.setAttribute("href", path + imageIcon.dataset.href);
 };
 
 /*
