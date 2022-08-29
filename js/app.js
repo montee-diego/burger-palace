@@ -1,5 +1,9 @@
 // Globals
 let orderTotal;
+let orderCurrent = 0;
+let orderPage = 0;
+let orderPrice = 0;
+let orderList = [];
 
 /*
   Workaround to relative paths when using barba.js
@@ -10,7 +14,6 @@ let orderTotal;
 const setImageSrcPath = (container, path) => {
   const images = container.querySelectorAll("img");
   const imageTransition = document.querySelectorAll(".page-anim img");
-  //const imageIcon = document.querySelector("head link[rel='icon']");
 
   images.forEach(image => {
     image.setAttribute("src", path + image.dataset.src);
@@ -19,14 +22,7 @@ const setImageSrcPath = (container, path) => {
   imageTransition.forEach(image => {
     image.setAttribute("src", path + image.dataset.src);
   });
-
-  //imageIcon.setAttribute("href", path + imageIcon.dataset.href);
 };
-
-// const setIconHref = path => {
-//   const imageIcon = document.querySelector("head link[rel='icon']");
-//   imageIcon.setAttribute("href", path + imageIcon.dataset.href);
-// };
 
 /*
   Workaround to redirect home when using barba.js
@@ -44,11 +40,11 @@ const setRedirectToHome = ({ pathname }) => {
 };
 
 // Home page
-const setHomeContext = () => {
-  const decreaseOrderBtn = document.querySelector(".decrease-order");
-  const increaseOrderBtn = document.querySelector(".increase-order");
-  const curOrder = document.querySelector("#nr-of-orders");
-  const beginOrder = document.querySelector("#begin-order");
+const setHomeContext = container => {
+  const decreaseOrderBtn = container.querySelector(".decrease-order");
+  const increaseOrderBtn = container.querySelector(".increase-order");
+  const curOrder = container.querySelector("#nr-of-orders");
+  const beginOrder = container.querySelector("#begin-order");
 
   const handleOrderDecrease = () => {
     curOrder.value = Math.max(1, parseInt(curOrder.value) - 1);
@@ -69,6 +65,24 @@ const setHomeContext = () => {
   beginOrder.addEventListener("submit", handleBeginOrder);
 };
 
+// Order page
+const setOrderContext = container => {
+  const cancelOrder = container.querySelector(".cancel-order");
+  const orderCountDisplay = container.querySelector(".order-count h2");
+  const orderPriceDisplay = container.querySelector(".order-price h4");
+
+  const handleCancelOrder = () => {
+    barba.go("./");
+  };
+
+  cancelOrder.addEventListener("click", handleCancelOrder);
+
+  orderCurrent += 1;
+  orderCountDisplay.innerText = `Order ${orderCurrent}/${orderTotal}`;
+  orderPage = 0;
+  orderPriceDisplay.innerText = `Burger: $${orderPrice.toFixed(2)}`;
+};
+
 // Barba.js configuration
 barba.init({
   preventRunning: true,
@@ -77,32 +91,24 @@ barba.init({
       namespace: "home",
       beforeEnter({ next }) {
         console.log("beforeEnter: home");
-        //setIconHref("./");
         setImageSrcPath(next.container, "./");
-        setHomeContext();
+        setHomeContext(next.container);
       },
       beforeLeave({ next }) {
         console.log("beforeLeave: home");
-        //setIconHref("./order/");
       },
     },
     {
       namespace: "order",
       beforeEnter({ current, next }) {
         console.log("beforeEnter: order");
-        //setIconHref("../");
 
-        if (current.container === null) {
+        if (!current.container) {
           setImageSrcPath(next.container, "../");
-          setRedirectToHome(window.location);
+          //setRedirectToHome(window.location);
         } else {
           setImageSrcPath(next.container, "./");
-
-          const cancelBtn = next.container.querySelector(".cancel-order");
-          cancelBtn.addEventListener("click", () => {
-            //setRedirectToHome(window.location);
-            barba.go("./");
-          });
+          setOrderContext(next.container);
         }
       },
     },

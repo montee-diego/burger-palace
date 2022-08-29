@@ -19,9 +19,50 @@
   </head>
   <body data-barba="wrapper">
     <main data-barba="container" data-barba-namespace="order">
-      <h1>test</h1>
-      <button class="cancel-order">back</button>
-      <img data-src="assets/splash-logo.svg" alt="burger logo" />
+      <header>
+        <nav class="nav-footer-wrapper">
+          <h1>Burger Palace</h1>
+          <div class="order-count">
+            <h2></h2>
+            <button class="cancel-order">Cancel</button>
+          </div>
+        </nav>
+      </header>
+
+      <section class="order-panel">
+        <form class="order-opts">
+          <div class="tab">
+            <label for="burger-beef">
+              <input type="radio" id="burger-beef" name="burger-opt" value="beef" />
+              <span>Beef</span>
+            </label>
+            <label for="burger-chicken">
+              <input type="radio" id="burger-chicken" name="burger-opt" value="beef" />
+              <span>Chicken</span>
+            </label>
+            <label for="burger-vegan">
+              <input type="radio" id="burger-vegan" name="burger-opt" value="beef" />
+              <span>Vegan</span>
+            </label>
+          </div>
+        </form>
+        <div class="order-preview-container">
+          <h1>test</h1>
+          <img data-src="assets/splash-logo.svg" alt="burger logo" />
+        </div>
+      </section>
+
+      <footer>
+        <div class="nav-footer-wrapper">
+          <div class="order-price">
+            <h4></h4>
+          </div>
+          <div class="order-controls">
+            <button class="prev-btn">Previous</button>
+            <button class="next-btn">Next</button>
+          </div>
+        </div>
+      </footer>
     </main>
 
     <div class="page-anim layer-a">
