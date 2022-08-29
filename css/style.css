@@ -15,6 +15,43 @@ body {
   height: 100%;
 }
 
+header {
+  border-bottom: 1px solid #c9c9c9;
+  width: 100%;
+}
+
+/* nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0rem auto;
+  min-height: 4rem;
+  width: 95%;
+} */
+
+nav > h1 {
+  font-size: 2.5rem;
+}
+
+footer {
+  border-top: 1px solid #c9c9c9;
+  width: 100%;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+section {
+  display: flex;
+  background-color: #f2f2f2;
+  flex: 1;
+  gap: 1rem;
+  padding: 1rem 2.5%;
+}
+
 button {
   background-color: white;
   border: 2px solid #b83725;
@@ -23,13 +60,42 @@ button {
   font-family: "Poppins", sans-serif;
   font-size: 1rem;
   text-align: center;
-  padding: 1rem 0rem;
-  width: 10rem;
+  padding: 0.5rem 0rem;
+  width: 7rem;
 }
 
 input {
   font-family: "Poppins", sans-serif;
   font-size: 1rem;
+}
+
+input[type="radio"] {
+  appearance: none;
+  background-color: white;
+  border: 2px solid white;
+  border-radius: 50%;
+  cursor: pointer;
+  margin: 0;
+  height: 0.9rem;
+  width: 0.9rem;
+  outline: 2px solid #b83725;
+  transition: background-color 0.25s ease-in-out;
+}
+
+input[type="radio"]:checked {
+  background-color: #b83725;
+}
+
+label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: white;
+  border: 2px solid #b83725;
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 0.5rem;
+  width: 100%;
 }
 
 img {
@@ -42,14 +108,22 @@ h1 {
   color: #b83725;
 }
 
+/* Helper classes */
+
+.nav-footer-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0rem auto;
+  min-height: 4rem;
+  width: 95%;
+}
+
 /* Home */
 
 .home {
-  display: flex;
-  flex-direction: column;
   justify-content: center;
   gap: 3rem;
-  height: 100%;
 }
 
 .logo {
@@ -143,6 +217,56 @@ h1 {
 #nr-of-orders:focus {
   outline: none;
 }
+
+/* Order page */
+
+.order-count {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.order-count > h2 {
+  font-size: 1.2rem;
+  white-space: nowrap;
+}
+
+.tab {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 250px;
+}
+
+.order-preview-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  background-color: white;
+  border: 2px solid #b83725;
+  border-radius: 5px;
+  position: relative;
+  overflow: hidden;
+}
+
+.order-preview-container::after {
+  content: "Preview";
+  font-family: "Fredoka One", cursive;
+  font-size: 1.5rem;
+  color: white;
+  background: #b83725;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-bottom-right-radius: 5px;
+  padding: 5px 20px;
+}
+
+/* .order-details {
+  margin: 0rem auto;
+  width: 95%;
+} */
 
 /* Page transition */
 

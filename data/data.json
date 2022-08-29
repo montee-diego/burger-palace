@@ -1,0 +1,14 @@
+{
+  "beef": {
+    "name": "Beef Burger",
+    "price": 3
+  },
+  "chicken": {
+    "name": "Chicken Burger",
+    "price": 3
+  },
+  "vegan": {
+    "name": "Vegan Burger",
+    "price": 3
+  }
+}
