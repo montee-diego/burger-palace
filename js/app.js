@@ -31,7 +31,7 @@ let appData = null;
 let order = {
   items: [],
   quantity: 1,
-  price: 0,
+  total: 0,
 };
 
 // Fetch APP data
@@ -76,8 +76,8 @@ const setHomeContext = container => {
 // Order page
 const setOrderContext = container => {
   const cancelOrder = container.querySelector(".cancel-order");
-  const orderCountDisplay = container.querySelector(".order-count h2");
-  const orderPriceDisplay = container.querySelector(".order-price h3");
+  const displayCount = container.querySelector(".order-count h2");
+  const displayPrice = container.querySelector(".order-price h3");
   const options = {
     burger: null,
     price: 0,
@@ -87,11 +87,33 @@ const setOrderContext = container => {
     barba.go(rootDir);
   };
 
+  const setPrice = () => {
+    displayPrice.innerText = `Burger: $${options.price.toFixed(2)}`;
+  };
+
   cancelOrder.addEventListener("click", handleCancelOrder);
 
-  orderCountDisplay.innerText = `Order ${order.items.length + 1}/${order.quantity}`;
-  orderPriceDisplay.innerText = `Burger: $${options.price.toFixed(2)}`;
+  displayCount.innerText = `Order ${order.items.length + 1}/${order.quantity}`;
   orderPage = 0;
+
+  // Burger selection
+  const inputBurger = container.querySelectorAll('input[name="burger-opt"]');
+
+  const handleBurgerInput = ({ target }) => {
+    if (options.burger) {
+      gsap.fromTo("." + options.burger, 0.5, burgerAnim.out().from, burgerAnim.out().to);
+    }
+
+    gsap.fromTo("." + target.value, 0.5, burgerAnim.in().from, burgerAnim.in().to);
+
+    options.burger = target.value;
+    options.price = appData[target.value].price;
+    setPrice();
+  };
+
+  inputBurger.forEach(input => {
+    input.addEventListener("change", handleBurgerInput);
+  });
 };
 
 // Barba.js configuration
@@ -117,11 +139,11 @@ barba.init({
         setAppData();
         setImageSrcPath(next.container);
 
-        if (!current.container) {
-          window.setTimeout(() => {
-            barba.go(rootDir);
-          });
-        }
+        // if (!current.container) {
+        //   window.setTimeout(() => {
+        //     barba.go(rootDir);
+        //   }, 2500);
+        // }
 
         setOrderContext(next.container);
       },
