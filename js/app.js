@@ -1,42 +1,50 @@
-// Globals
-let orderTotal;
-let orderCurrent = 0;
-let orderPage = 0;
-let orderPrice = 0;
-let orderList = [];
-
 /*
   Workaround to relative paths when using barba.js
   Since barba.js makes the page behave like a Single Page Application, this small
   helper function sets the paths relative to the current barba-namespace rather
   than the URL
 */
-const setImageSrcPath = (container, path) => {
+const rootDir = (location => {
+  const dirTree = location.pathname.split("/");
+
+  if (dirTree[1] === "burger-palace") {
+    return "/burger-palace/";
+  } else {
+    return "/";
+  }
+})(window.location);
+
+const setImageSrcPath = container => {
   const images = container.querySelectorAll("img");
   const imageTransition = document.querySelectorAll(".page-anim img");
 
   images.forEach(image => {
-    image.setAttribute("src", path + image.dataset.src);
+    image.setAttribute("src", rootDir + image.dataset.src);
   });
 
   imageTransition.forEach(image => {
-    image.setAttribute("src", path + image.dataset.src);
+    image.setAttribute("src", rootDir + image.dataset.src);
   });
 };
 
-/*
-  Workaround to redirect home when using barba.js
-  This helper function will make redirect work with github pages, local server and
-  any other hosting site.
-*/
-const setRedirectToHome = ({ pathname }) => {
-  const url = pathname.replace(/\/$/, "");
-  const path = url.substring(url.lastIndexOf("/"));
-  const to = pathname.slice(0, -path.length);
+let appData = null;
+let order = {
+  items: [],
+  quantity: 1,
+  price: 0,
+};
 
-  setTimeout(() => {
-    barba.go(to);
-  }, 2500);
+// Fetch APP data
+const setAppData = () => {
+  fetch(rootDir + "data/data.json")
+    .then(res => res.json())
+    .then(data => {
+      appData = data;
+      console.log(appData);
+    })
+    .catch(error => {
+      console.log(error);
+    });
 };
 
 // Home page
@@ -56,7 +64,7 @@ const setHomeContext = container => {
 
   const handleBeginOrder = event => {
     event.preventDefault();
-    orderTotal = parseInt(curOrder.value);
+    order.quantity = parseInt(curOrder.value);
     barba.go("./order");
   };
 
@@ -69,18 +77,21 @@ const setHomeContext = container => {
 const setOrderContext = container => {
   const cancelOrder = container.querySelector(".cancel-order");
   const orderCountDisplay = container.querySelector(".order-count h2");
-  const orderPriceDisplay = container.querySelector(".order-price h4");
+  const orderPriceDisplay = container.querySelector(".order-price h3");
+  const options = {
+    burger: null,
+    price: 0,
+  };
 
   const handleCancelOrder = () => {
-    barba.go("./");
+    barba.go(rootDir);
   };
 
   cancelOrder.addEventListener("click", handleCancelOrder);
 
-  orderCurrent += 1;
-  orderCountDisplay.innerText = `Order ${orderCurrent}/${orderTotal}`;
+  orderCountDisplay.innerText = `Order ${order.items.length + 1}/${order.quantity}`;
+  orderPriceDisplay.innerText = `Burger: $${options.price.toFixed(2)}`;
   orderPage = 0;
-  orderPriceDisplay.innerText = `Burger: $${orderPrice.toFixed(2)}`;
 };
 
 // Barba.js configuration
@@ -91,7 +102,8 @@ barba.init({
       namespace: "home",
       beforeEnter({ next }) {
         console.log("beforeEnter: home");
-        setImageSrcPath(next.container, "./");
+        setAppData();
+        setImageSrcPath(next.container);
         setHomeContext(next.container);
       },
       beforeLeave({ next }) {
@@ -102,14 +114,16 @@ barba.init({
       namespace: "order",
       beforeEnter({ current, next }) {
         console.log("beforeEnter: order");
+        setAppData();
+        setImageSrcPath(next.container);
 
         if (!current.container) {
-          setImageSrcPath(next.container, "../");
-          //setRedirectToHome(window.location);
-        } else {
-          setImageSrcPath(next.container, "./");
-          setOrderContext(next.container);
+          window.setTimeout(() => {
+            barba.go(rootDir);
+          });
         }
+
+        setOrderContext(next.container);
       },
     },
   ],

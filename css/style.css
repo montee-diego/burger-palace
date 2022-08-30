@@ -192,7 +192,7 @@ h1 {
   color: white;
   display: flex;
   justify-content: center;
-  width: 3rem;
+  width: 2.5rem;
 }
 
 .decrease-order {
@@ -261,6 +261,44 @@ h1 {
   left: 0;
   border-bottom-right-radius: 5px;
   padding: 5px 20px;
+}
+
+.order-preview {
+  position: relative;
+  height: 100%;
+  max-width: 500px;
+  width: 50%;
+}
+
+.plate {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  transform: translateY(-20%);
+}
+
+.ingredient {
+  position: absolute;
+  left: 25%;
+  bottom: 0;
+  opacity: 0;
+  width: 50%;
+  z-index: 1;
+}
+
+.bbq {
+  transform: scale(50%);
+  z-index: 20;
+}
+
+.fries {
+  z-index: 1;
+}
+
+.drink {
+  transform: scale(60%);
+  z-index: 1;
 }
 
 /* .order-details {

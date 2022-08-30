@@ -37,25 +37,29 @@
               <span>Beef</span>
             </label>
             <label for="burger-chicken">
-              <input type="radio" id="burger-chicken" name="burger-opt" value="beef" />
+              <input type="radio" id="burger-chicken" name="burger-opt" value="chicken" />
               <span>Chicken</span>
             </label>
             <label for="burger-vegan">
-              <input type="radio" id="burger-vegan" name="burger-opt" value="beef" />
+              <input type="radio" id="burger-vegan" name="burger-opt" value="vegan" />
               <span>Vegan</span>
             </label>
           </div>
         </form>
         <div class="order-preview-container">
-          <h1>test</h1>
-          <img data-src="assets/splash-logo.svg" alt="burger logo" />
+          <div class="order-preview">
+            <img data-src="assets/order/burger-beef.svg" class="ingredient beef" />
+            <img data-src="assets/order/burger-chicken.svg" class="ingredient chicken" />
+            <img data-src="assets/order/burger-vegan.svg" class="ingredient vegan" />
+            <img data-src="assets/order/base-plate.svg" class="plate" />
+          </div>
         </div>
       </section>
 
       <footer>
         <div class="nav-footer-wrapper">
           <div class="order-price">
-            <h4></h4>
+            <h3></h3>
           </div>
           <div class="order-controls">
             <button class="prev-btn">Previous</button>
