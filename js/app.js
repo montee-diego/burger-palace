@@ -88,6 +88,7 @@ const setOrderContext = container => {
     cheese: null,
     extras: [],
     side: null,
+    drink: null,
     page: 0,
     price: 0,
     set setPrice(val) {
@@ -133,6 +134,25 @@ const setOrderContext = container => {
     options.page += 1;
     handleMenuSwitch(tabs[options.page - 1], tabs[options.page]);
 
+    if (options.page === 3) {
+      const idx = options.extras.length;
+
+      gsap.fromTo(".bread-top", 0.5, breadAnim.in(idx).from, breadAnim.in(idx).to);
+    } else if (options.page === 4) {
+      nextBtn.innerText = "Done";
+    } else if (options.page === 5) {
+      order.items.push(options);
+      order.total += options.price;
+
+      console.log(order);
+
+      if (order.items.length === order.quantity) {
+        barba.go("./order-review");
+      } else {
+        barba.go("./order");
+      }
+    }
+
     setTimeout(() => {
       nextBtn.disabled = false;
 
@@ -177,7 +197,19 @@ const setOrderContext = container => {
         options.setPrice = options.price - appData[options.side].price;
       }
 
+      gsap.fromTo(".bread-top", 0.5, breadAnim.out().from, breadAnim.out().to);
       options.side = "no-side";
+    } else if (options.page === 3) {
+      inputDrink[0].checked = true;
+
+      if (options.drink && options.drink !== "no-drink") {
+        gsap.fromTo(`.${options.drink}`, 0.5, drinkAnim.out().from, drinkAnim.out().to);
+        options.setPrice = options.price - appData[options.drink].price;
+      }
+
+      options.drink = "no-drink";
+
+      nextBtn.innerText = "Next";
     }
 
     setTimeout(() => {
@@ -290,6 +322,27 @@ const setOrderContext = container => {
 
   inputSides.forEach(input => {
     input.addEventListener("change", handleSidesInput);
+  });
+
+  // Options: Drinks
+  const inputDrink = container.querySelectorAll('input[name="drink-opts"]');
+
+  const handleDrinkInput = ({ target }) => {
+    if (options.drink && options.drink !== "no-drink") {
+      gsap.fromTo(`.${options.drink}`, 0.5, drinkAnim.out().from, drinkAnim.out().to);
+      options.setPrice = options.price - appData[options.drink].price;
+    }
+
+    if (target.value !== "no-drink") {
+      gsap.fromTo(`.${target.value}`, 0.5, drinkAnim.in().from, drinkAnim.in().to);
+    }
+
+    options.drink = target.value;
+    options.setPrice = options.price + appData[options.drink].price;
+  };
+
+  inputDrink.forEach(input => {
+    input.addEventListener("change", handleDrinkInput);
   });
 };
 

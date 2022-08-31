@@ -58,5 +58,29 @@
   "fries": {
     "name": "Fries",
     "price": 2.5
+  },
+  "no-drink": {
+    "name": "No Drink",
+    "price": 0
+  },
+  "cola": {
+    "name": "Cola",
+    "price": 1.5
+  },
+  "cola-zero": {
+    "name": "Cola Zero",
+    "price": 2
+  },
+  "lime": {
+    "name": "Lime",
+    "price": 1.5
+  },
+  "orange": {
+    "name": "Orange",
+    "price": 1.5
+  },
+  "sparkling": {
+    "name": "Sparkling",
+    "price": 1
   }
 }

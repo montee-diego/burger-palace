@@ -44,10 +44,16 @@ const menuAnim = {
 };
 
 const breadAnim = {
-  in: () => {
+  in: index => {
     return {
-      from: { y: "-200%", opacity: 0 },
-      to: { y: "-55%", opacity: 1 },
+      from: { x: "0%", y: "-300%", opacity: 0, "z-index": 3 + index + 1 },
+      to: { x: "0%", y: `-${110 + 10 * (index + 1)}%`, opacity: 1, "z-index": 3 + index + 1 },
+    };
+  },
+  out: () => {
+    return {
+      from: { x: "0%" },
+      to: { x: "300%", opacity: 0 },
     };
   },
 };
@@ -131,4 +137,18 @@ const sidesBbqAnim = {
     };
   },
 };
-// const drinkAnim
+
+const drinkAnim = {
+  in: () => {
+    return {
+      from: { x: "50%", y: "-300%", opacity: 0 },
+      to: { x: "50%", y: "-10%", opacity: 1 },
+    };
+  },
+  out: () => {
+    return {
+      from: { x: "50%" },
+      to: { x: "200%", opacity: 0 },
+    };
+  },
+};
