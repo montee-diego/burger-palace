@@ -101,5 +101,34 @@ const extrasAnim = {
     };
   },
 };
-// const sidesAnim
+
+const sidesAnim = {
+  in: () => {
+    return {
+      from: { x: "-45%", y: "-300%", opacity: 0 },
+      to: { x: "-45%", y: "-50%", opacity: 1 },
+    };
+  },
+  out: () => {
+    return {
+      from: { x: "-45%" },
+      to: { x: "-45%", y: "-300%", opacity: 0 },
+    };
+  },
+};
+
+const sidesBbqAnim = {
+  in: () => {
+    return {
+      from: { x: "-70%", y: "-300%", opacity: 0 },
+      to: { x: "-70%", y: "-40%", opacity: 1 },
+    };
+  },
+  out: () => {
+    return {
+      from: { x: "-70%" },
+      to: { x: "-70%", y: "-300%", opacity: 0 },
+    };
+  },
+};
 // const drinkAnim

@@ -50,5 +50,13 @@
   "mushrooms": {
     "name": "Mushrooms",
     "price": 0.2
+  },
+  "no-side": {
+    "name": "No Side",
+    "price": 0
+  },
+  "fries": {
+    "name": "Fries",
+    "price": 2.5
   }
 }

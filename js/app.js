@@ -87,6 +87,7 @@ const setOrderContext = container => {
     burger: null,
     cheese: null,
     extras: [],
+    side: null,
     page: 0,
     price: 0,
     set setPrice(val) {
@@ -156,6 +157,27 @@ const setOrderContext = container => {
       }
 
       options.cheese = "no-cheese";
+    } else if (options.page === 1) {
+      let price = 0;
+
+      inputExtras.forEach(input => (input.checked = false));
+      options.extras.forEach(extra => {
+        price += appData[extra].price;
+      });
+
+      options.extras = [];
+      options.setPrice = options.price - price;
+      gsap.to(".extra", 0.5, { opacity: 0 });
+    } else if (options.page === 2) {
+      inputSides[0].checked = true;
+
+      if (options.side === "fries") {
+        gsap.fromTo(`.${options.side}`, 0.5, sidesAnim.out().from, sidesAnim.out().to);
+        gsap.fromTo(`.bbq`, 0.5, sidesBbqAnim.out().from, sidesBbqAnim.out().to);
+        options.setPrice = options.price - appData[options.side].price;
+      }
+
+      options.side = "no-side";
     }
 
     setTimeout(() => {
@@ -234,8 +256,10 @@ const setOrderContext = container => {
       gsap.fromTo(`.${target.value}`, 0.5, extrasAnim.out().from, extrasAnim.out().to);
 
       if (!isOnTop) {
-        options.extras.forEach(extra => {
-          gsap.to(`.${extra}`, 0.5, extrasAnim.move().to);
+        options.extras.forEach((extra, index) => {
+          if (index >= idx) {
+            gsap.to(`.${extra}`, 0.5, extrasAnim.move().to);
+          }
         });
       }
     }
@@ -243,6 +267,29 @@ const setOrderContext = container => {
 
   inputExtras.forEach(input => {
     input.addEventListener("click", handleExtrasInput);
+  });
+
+  // Option: Sides
+  const inputSides = container.querySelectorAll('input[name="side-opts"]');
+
+  const handleSidesInput = ({ target }) => {
+    if (options.side === "fries") {
+      gsap.fromTo(`.${options.side}`, 0.5, sidesAnim.out().from, sidesAnim.out().to);
+      gsap.fromTo(`.bbq`, 0.5, sidesBbqAnim.out().from, sidesBbqAnim.out().to);
+      options.setPrice = options.price - appData[options.side].price;
+    }
+
+    if (target.value !== "no-side") {
+      gsap.fromTo(`.${target.value}`, 0.5, sidesAnim.in().from, sidesAnim.in().to);
+      gsap.fromTo(`.bbq`, 0.5, sidesBbqAnim.in().from, sidesBbqAnim.in().to);
+    }
+
+    options.side = target.value;
+    options.setPrice = options.price + appData[options.side].price;
+  };
+
+  inputSides.forEach(input => {
+    input.addEventListener("change", handleSidesInput);
   });
 };
 
