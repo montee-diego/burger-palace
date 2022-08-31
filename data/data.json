@@ -1,14 +1,26 @@
 {
   "beef": {
     "name": "Beef Burger",
-    "price": 3
+    "price": 5
   },
   "chicken": {
     "name": "Chicken Burger",
-    "price": 3
+    "price": 4.5
   },
   "vegan": {
     "name": "Vegan Burger",
-    "price": 3
+    "price": 4.5
+  },
+  "no-cheese": {
+    "name": "No Cheese",
+    "price": 0
+  },
+  "swiss": {
+    "name": "Swiss",
+    "price": 1.25
+  },
+  "cheddar": {
+    "name": "Cheddar",
+    "price": 1
   }
 }

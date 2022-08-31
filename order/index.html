@@ -32,7 +32,7 @@
 
       <section class="order-panel">
         <form class="order-opts">
-          <div class="tab">
+          <div class="tab order-default">
             <label for="burger-beef">
               <input type="radio" id="burger-beef" name="burger-opt" value="beef" />
               <span>Beef</span>
@@ -46,12 +46,30 @@
               <span>Vegan</span>
             </label>
           </div>
+
+          <div class="tab">
+            <label for="no-cheese">
+              <input type="radio" id="no-cheese" name="cheese-opt" value="no-cheese" />
+              <span>No Cheese</span>
+            </label>
+            <label for="swiss">
+              <input type="radio" id="swiss" name="cheese-opt" value="swiss" />
+              <span>Swiss (+ €1.25)</span>
+            </label>
+            <label for="cheddar">
+              <input type="radio" id="cheddar" name="cheese-opt" value="cheddar" />
+              <span>Cheddar (+ €1.00)</span>
+            </label>
+          </div>
         </form>
         <div class="order-preview-container">
           <div class="order-preview">
             <img data-src="assets/order/burger-beef.svg" class="ingredient beef" />
             <img data-src="assets/order/burger-chicken.svg" class="ingredient chicken" />
             <img data-src="assets/order/burger-vegan.svg" class="ingredient vegan" />
+            <img data-src="assets/order/cheese-swiss.svg" class="ingredient cheese swiss" />
+            <img data-src="assets/order/cheese-cheddar.svg" class="ingredient cheese cheddar" />
+            <img data-src="assets/order/bread-bottom.svg" class="ingredient bread" />
             <img data-src="assets/order/base-plate.svg" class="plate" />
           </div>
         </div>
@@ -63,8 +81,8 @@
             <h3></h3>
           </div>
           <div class="order-controls">
-            <button class="prev-btn">Previous</button>
-            <button class="next-btn">Next</button>
+            <button class="prev-btn" disabled>Previous</button>
+            <button class="next-btn" disabled>Next</button>
           </div>
         </div>
       </footer>

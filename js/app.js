@@ -27,6 +27,11 @@ const setImageSrcPath = container => {
   });
 };
 
+// Utils
+const utilsFormatPrice = price => {
+  return Intl.NumberFormat(undefined, { style: "currency", currency: "EUR" }).format(price);
+};
+
 let appData = null;
 let order = {
   items: [],
@@ -74,45 +79,155 @@ const setHomeContext = container => {
 };
 
 // Order page
+// const setBurgerInput = (container, options, setPrice) => {
+//   const inputBurger = container.querySelectorAll('input[name="burger-opt"]');
+
+//   const handleBurgerInput = ({ target }) => {
+//     if (options.burger) {
+//       gsap.fromTo("." + options.burger, 0.5, burgerAnim.out().from, burgerAnim.out().to);
+//     }
+
+//     gsap.fromTo("." + target.value, 0.5, burgerAnim.in().from, burgerAnim.in().to);
+
+//     options.burger = target.value;
+//     options.price = appData[target.value].price;
+//     setPrice();
+//   };
+
+//   inputBurger.forEach(input => {
+//     input.addEventListener("change", handleBurgerInput);
+//   });
+// };
+
 const setOrderContext = container => {
-  const cancelOrder = container.querySelector(".cancel-order");
+  // Order
   const displayCount = container.querySelector(".order-count h2");
   const displayPrice = container.querySelector(".order-price h3");
+  const currentOrder = order.items.length + 1;
   const options = {
     burger: null,
+    cheese: null,
+    page: 0,
     price: 0,
+    set setPrice(val) {
+      this.price = val;
+      displayPrice.innerText = `Burger ${utilsFormatPrice(val)}`;
+    },
+  };
+
+  displayCount.innerText = `Order ${currentOrder}/${order.quantity}`;
+  displayPrice.innerText = `Burger ${utilsFormatPrice(options.price)}`;
+
+  // Button actions
+  const cancelBtn = container.querySelector(".cancel-order");
+  const prevBtn = container.querySelector(".prev-btn");
+  const nextBtn = container.querySelector(".next-btn");
+  const tabs = container.querySelectorAll(".tab");
+
+  const handleMenuSwitch = (leave, enter) => {
+    const tl = gsap.timeline({
+      defaults: {
+        duration: 0.5,
+        ease: "power2.inOut",
+      },
+    });
+
+    tl.fromTo(leave, menuAnim.out().from, menuAnim.out().to);
+    tl.fromTo(enter, menuAnim.in().from, menuAnim.in().to);
   };
 
   const handleCancelOrder = () => {
+    cancelBtn.disabled = true;
+
     barba.go(rootDir);
+
+    setTimeout(() => {
+      cancelBtn.disabled = false;
+    }, 1500);
   };
 
-  const setPrice = () => {
-    displayPrice.innerText = `Burger: $${options.price.toFixed(2)}`;
+  const handleNextPage = () => {
+    nextBtn.disabled = true;
+
+    options.page += 1;
+    handleMenuSwitch(tabs[options.page - 1], tabs[options.page]);
+
+    setTimeout(() => {
+      nextBtn.disabled = false;
+
+      if (options.page > 0) {
+        prevBtn.disabled = false;
+      }
+    }, 1500);
   };
 
-  cancelOrder.addEventListener("click", handleCancelOrder);
+  const handlePrevPage = () => {
+    prevBtn.disabled = true;
 
-  displayCount.innerText = `Order ${order.items.length + 1}/${order.quantity}`;
-  orderPage = 0;
+    options.page -= 1;
+    handleMenuSwitch(tabs[options.page + 1], tabs[options.page]);
 
-  // Burger selection
+    if (options.page === 0) {
+      inputCheese[0].checked = true;
+
+      if (options.cheese === "swiss" || options.cheese === "cheddar") {
+        gsap.fromTo(`.${options.cheese}`, 0.5, cheeseAnim.out().from, cheeseAnim.out().to);
+        options.setPrice = options.price - appData[options.cheese].price;
+      }
+
+      options.cheese = "no-cheese";
+    }
+
+    setTimeout(() => {
+      if (options.page > 0) {
+        prevBtn.disabled = false;
+      }
+    }, 1500);
+  };
+
+  cancelBtn.addEventListener("click", handleCancelOrder);
+  nextBtn.addEventListener("click", handleNextPage);
+  prevBtn.addEventListener("click", handlePrevPage);
+
+  // Option: Burger
   const inputBurger = container.querySelectorAll('input[name="burger-opt"]');
 
   const handleBurgerInput = ({ target }) => {
     if (options.burger) {
-      gsap.fromTo("." + options.burger, 0.5, burgerAnim.out().from, burgerAnim.out().to);
+      gsap.fromTo(`.${options.burger}`, 0.5, burgerAnim.out().from, burgerAnim.out().to);
+      options.setPrice = options.price - appData[options.burger].price;
+    } else {
+      nextBtn.disabled = false;
     }
 
-    gsap.fromTo("." + target.value, 0.5, burgerAnim.in().from, burgerAnim.in().to);
-
+    gsap.fromTo(`.${target.value}`, 0.5, burgerAnim.in().from, burgerAnim.in().to);
     options.burger = target.value;
-    options.price = appData[target.value].price;
-    setPrice();
+    options.setPrice = options.price + appData[options.burger].price;
   };
 
   inputBurger.forEach(input => {
     input.addEventListener("change", handleBurgerInput);
+  });
+
+  // Option: Cheese
+  const inputCheese = container.querySelectorAll('input[name="cheese-opt"]');
+
+  const handleCheeseInput = ({ target }) => {
+    if (options.cheese === "swiss" || options.cheese === "cheddar") {
+      gsap.fromTo(`.${options.cheese}`, 0.5, cheeseAnim.out().from, cheeseAnim.out().to);
+      options.setPrice = options.price - appData[options.cheese].price;
+    }
+
+    if (target.value !== "no-cheese") {
+      gsap.fromTo(`.${target.value}`, 0.5, cheeseAnim.in().from, cheeseAnim.in().to);
+    }
+
+    options.cheese = target.value;
+    options.setPrice = options.price + appData[options.cheese].price;
+  };
+
+  inputCheese.forEach(input => {
+    input.addEventListener("change", handleCheeseInput);
   });
 };
 
@@ -161,8 +276,8 @@ barba.init({
           },
         });
 
-        tl.fromTo(current.container, 0.25, { opacity: 1 }, { opacity: 0 });
-        tl.fromTo(elements, 0.75, { x: "-100%" }, { x: "0%", onComplete: done });
+        tl.fromTo(current.container, 0.25, fadeAnim.out().from, fadeAnim.out().to);
+        tl.fromTo(elements, 0.75, pageAnim.out().from, pageAnim.out(done).to);
       },
       enter({ next }) {
         const done = this.async();
@@ -174,8 +289,8 @@ barba.init({
           },
         });
 
-        tl.fromTo(elements, 0.75, { x: "0%" }, { x: "100%", onComplete: done });
-        tl.fromTo(next.container, 0.25, { opacity: 0 }, { opacity: 1 });
+        tl.fromTo(elements, 0.75, pageAnim.in().from, pageAnim.in(done).to);
+        tl.fromTo(next.container, 0.25, fadeAnim.in().from, fadeAnim.in().to);
       },
     },
   ],

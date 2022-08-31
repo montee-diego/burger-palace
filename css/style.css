@@ -64,6 +64,10 @@ button {
   width: 7rem;
 }
 
+button:disabled {
+  cursor: default;
+}
+
 input {
   font-family: "Poppins", sans-serif;
   font-size: 1rem;
@@ -231,11 +235,20 @@ h1 {
   white-space: nowrap;
 }
 
+.order-opts {
+  min-width: 250px;
+}
+
 .tab {
-  display: flex;
+  display: none;
   flex-direction: column;
   gap: 10px;
-  min-width: 250px;
+  opacity: 0;
+}
+
+.tab.order-default {
+  display: flex;
+  opacity: 1;
 }
 
 .order-preview-container {
@@ -285,6 +298,11 @@ h1 {
   opacity: 0;
   width: 50%;
   z-index: 1;
+}
+
+.bread {
+  opacity: 1;
+  transform: translateY(-55%);
 }
 
 .bbq {
