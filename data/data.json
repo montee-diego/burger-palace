@@ -22,5 +22,33 @@
   "cheddar": {
     "name": "Cheddar",
     "price": 1
+  },
+  "eggs": {
+    "name": "Eggs",
+    "price": 0.5
+  },
+  "bacon": {
+    "name": "Bacon",
+    "price": 0.75
+  },
+  "salami": {
+    "name": "Salami",
+    "price": 0.5
+  },
+  "onions": {
+    "name": "Onions",
+    "price": 0.15
+  },
+  "tomato": {
+    "name": "Tomato",
+    "price": 0.15
+  },
+  "lettuce": {
+    "name": "Lettuce",
+    "price": 0.1
+  },
+  "mushrooms": {
+    "name": "Mushrooms",
+    "price": 0.2
   }
 }

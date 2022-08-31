@@ -79,34 +79,14 @@ const setHomeContext = container => {
 };
 
 // Order page
-// const setBurgerInput = (container, options, setPrice) => {
-//   const inputBurger = container.querySelectorAll('input[name="burger-opt"]');
-
-//   const handleBurgerInput = ({ target }) => {
-//     if (options.burger) {
-//       gsap.fromTo("." + options.burger, 0.5, burgerAnim.out().from, burgerAnim.out().to);
-//     }
-
-//     gsap.fromTo("." + target.value, 0.5, burgerAnim.in().from, burgerAnim.in().to);
-
-//     options.burger = target.value;
-//     options.price = appData[target.value].price;
-//     setPrice();
-//   };
-
-//   inputBurger.forEach(input => {
-//     input.addEventListener("change", handleBurgerInput);
-//   });
-// };
-
 const setOrderContext = container => {
-  // Order
   const displayCount = container.querySelector(".order-count h2");
   const displayPrice = container.querySelector(".order-price h3");
   const currentOrder = order.items.length + 1;
   const options = {
     burger: null,
     cheese: null,
+    extras: [],
     page: 0,
     price: 0,
     set setPrice(val) {
@@ -228,6 +208,41 @@ const setOrderContext = container => {
 
   inputCheese.forEach(input => {
     input.addEventListener("change", handleCheeseInput);
+  });
+
+  // Options: Extras
+  const inputExtras = container.querySelectorAll('input[type="checkbox"]');
+
+  const handleExtrasInput = ({ target }) => {
+    let idx;
+    let isOnTop;
+
+    if (target.checked) {
+      options.extras.push(target.value);
+      options.setPrice = options.price + appData[target.value].price;
+
+      idx = options.extras.length;
+
+      gsap.fromTo(`.${target.value}`, 0.5, extrasAnim.in(idx).from, extrasAnim.in(idx).to);
+    } else {
+      idx = options.extras.findIndex(extra => extra === target.value);
+      isOnTop = idx === options.extras.length - 1;
+
+      options.setPrice = options.price - appData[target.value].price;
+      options.extras.splice(idx, 1);
+
+      gsap.fromTo(`.${target.value}`, 0.5, extrasAnim.out().from, extrasAnim.out().to);
+
+      if (!isOnTop) {
+        options.extras.forEach(extra => {
+          gsap.to(`.${extra}`, 0.5, extrasAnim.move().to);
+        });
+      }
+    }
+  };
+
+  inputExtras.forEach(input => {
+    input.addEventListener("click", handleExtrasInput);
   });
 };
 

@@ -81,6 +81,25 @@ const cheeseAnim = {
     };
   },
 };
-// const extrasAnim
+
+const extrasAnim = {
+  in: index => {
+    return {
+      from: { x: "0%", y: "-300%", opacity: 0, "z-index": 3 + index },
+      to: { x: "0%", y: `-${110 + 10 * index}%`, opacity: 1, "z-index": 3 + index },
+    };
+  },
+  out: () => {
+    return {
+      from: { x: "0%" },
+      to: { x: "200%", opacity: 0 },
+    };
+  },
+  move: () => {
+    return {
+      to: { y: "+=10%", "z-index": "-=1" },
+    };
+  },
+};
 // const sidesAnim
 // const drinkAnim
