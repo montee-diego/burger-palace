@@ -85,10 +85,10 @@ const setOrderContext = container => {
   const currentOrder = order.items.length + 1;
   const options = {
     burger: null,
-    cheese: null,
+    cheese: "no-cheese",
     extras: [],
-    side: null,
-    drink: null,
+    side: "no-side",
+    drink: "no-drink",
     page: 0,
     price: 0,
     set setPrice(val) {
@@ -208,7 +208,6 @@ const setOrderContext = container => {
       }
 
       options.drink = "no-drink";
-
       nextBtn.innerText = "Next";
     }
 
@@ -247,7 +246,7 @@ const setOrderContext = container => {
   const inputCheese = container.querySelectorAll('input[name="cheese-opt"]');
 
   const handleCheeseInput = ({ target }) => {
-    if (options.cheese === "swiss" || options.cheese === "cheddar") {
+    if (options.cheese !== "no-cheese") {
       gsap.fromTo(`.${options.cheese}`, 0.5, cheeseAnim.out().from, cheeseAnim.out().to);
       options.setPrice = options.price - appData[options.cheese].price;
     }
@@ -305,7 +304,7 @@ const setOrderContext = container => {
   const inputSides = container.querySelectorAll('input[name="side-opts"]');
 
   const handleSidesInput = ({ target }) => {
-    if (options.side === "fries") {
+    if (options.side !== "no-side") {
       gsap.fromTo(`.${options.side}`, 0.5, sidesAnim.out().from, sidesAnim.out().to);
       gsap.fromTo(`.bbq`, 0.5, sidesBbqAnim.out().from, sidesBbqAnim.out().to);
       options.setPrice = options.price - appData[options.side].price;
@@ -328,7 +327,7 @@ const setOrderContext = container => {
   const inputDrink = container.querySelectorAll('input[name="drink-opts"]');
 
   const handleDrinkInput = ({ target }) => {
-    if (options.drink && options.drink !== "no-drink") {
+    if (options.drink !== "no-drink") {
       gsap.fromTo(`.${options.drink}`, 0.5, drinkAnim.out().from, drinkAnim.out().to);
       options.setPrice = options.price - appData[options.drink].price;
     }

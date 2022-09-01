@@ -17,39 +17,39 @@
   },
   "swiss": {
     "name": "Swiss",
-    "price": 1.25
+    "price": 1.75
   },
   "cheddar": {
     "name": "Cheddar",
-    "price": 1
+    "price": 1.5
   },
   "eggs": {
     "name": "Eggs",
-    "price": 0.5
+    "price": 1
   },
   "bacon": {
     "name": "Bacon",
-    "price": 0.75
+    "price": 1.5
   },
   "salami": {
     "name": "Salami",
-    "price": 0.5
+    "price": 1
   },
   "onions": {
     "name": "Onions",
-    "price": 0.15
+    "price": 0.5
   },
   "tomato": {
     "name": "Tomato",
-    "price": 0.15
+    "price": 0.75
   },
   "lettuce": {
     "name": "Lettuce",
-    "price": 0.1
+    "price": 0.4
   },
   "mushrooms": {
     "name": "Mushrooms",
-    "price": 0.2
+    "price": 0.75
   },
   "no-side": {
     "name": "No Side",
@@ -65,22 +65,22 @@
   },
   "cola": {
     "name": "Cola",
-    "price": 1.5
+    "price": 2.5
   },
   "cola-zero": {
     "name": "Cola Zero",
-    "price": 2
+    "price": 3
   },
   "lime": {
     "name": "Lime",
-    "price": 1.5
+    "price": 2
   },
   "orange": {
     "name": "Orange",
-    "price": 1.5
+    "price": 2
   },
   "sparkling": {
     "name": "Sparkling",
-    "price": 1
+    "price": 1.5
   }
 }
