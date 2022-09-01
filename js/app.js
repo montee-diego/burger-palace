@@ -54,6 +54,12 @@ const setAppData = () => {
 
 // Home page
 const setHomeContext = container => {
+  order = {
+    items: [],
+    quantity: 1,
+    total: 0,
+  };
+
   const decreaseOrderBtn = container.querySelector(".decrease-order");
   const increaseOrderBtn = container.querySelector(".increase-order");
   const curOrder = container.querySelector("#nr-of-orders");
@@ -345,6 +351,90 @@ const setOrderContext = container => {
   });
 };
 
+const setOrderReviewContext = container => {
+  const orderList = container.querySelector(".review-container");
+  const displayPrice = container.querySelector(".order-price h3");
+  const cancelBtn = container.querySelector(".cancel-order");
+  const submitBtn = container.querySelector(".submit-order");
+  const submitCheck = container.querySelector("#confirm-order");
+
+  const handleCancelOrder = () => {
+    cancelBtn.disabled = true;
+
+    barba.go(rootDir);
+
+    setTimeout(() => {
+      cancelBtn.disabled = false;
+    }, 1500);
+  };
+
+  const handleSubmitOrder = () => {
+    submitBtn.disabled = true;
+
+    barba.go("./order-complete");
+  };
+
+  const handleSubmitCheck = ({ target }) => {
+    submitBtn.disabled = !target.checked;
+  };
+
+  cancelBtn.addEventListener("click", handleCancelOrder);
+  submitBtn.addEventListener("click", handleSubmitOrder);
+  submitCheck.addEventListener("change", handleSubmitCheck);
+
+  displayPrice.innerText = `Total ${utilsFormatPrice(order.total)}`;
+
+  const displayOrderItem = (item, index) => {
+    const child = document.createElement("div");
+    const options = {
+      burger: appData[item.burger].name,
+      cheese: appData[item.cheese].name,
+      extras: (() => {
+        let names = item.extras.length > 0 ? "" : "No Extras";
+
+        item.extras.forEach((extra, index) => {
+          names += (index === 0 ? "" : ", ") + appData[extra].name;
+        });
+
+        return names;
+      })(),
+      side: appData[item.side].name,
+      drink: appData[item.drink].name,
+    };
+
+    child.innerHTML = `
+      <div class="item-info">
+        <h4>${options.burger}</h4>
+        <p>${options.cheese} • ${options.extras} • ${options.side} • ${options.drink}</p>
+      </div>
+      <h4>${utilsFormatPrice(item.price)}</h4>
+    `;
+
+    return child;
+  };
+
+  order.items.forEach((item, index) => {
+    const orderItem = displayOrderItem(item, index);
+    orderList.appendChild(orderItem);
+  });
+};
+
+const setOrderCompleteContext = container => {
+  const orderNrDisplay = container.querySelector(".order-number");
+  const orderDoneBtn = container.querySelector(".order-done");
+
+  let orderNumber = (function () {
+    return Math.random().toString().substring(2, 6);
+  })();
+
+  orderNrDisplay.innerText = `Order N° 0${orderNumber}`;
+
+  orderDoneBtn.addEventListener("click", () => {
+    orderDoneBtn.disabled = true;
+    barba.go(rootDir);
+  });
+};
+
 // Barba.js configuration
 barba.init({
   preventRunning: true,
@@ -375,6 +465,19 @@ barba.init({
         // }
 
         setOrderContext(next.container);
+      },
+    },
+    {
+      namespace: "order-review",
+      beforeEnter({ current, next }) {
+        setOrderReviewContext(next.container);
+      },
+    },
+    {
+      namespace: "order-complete",
+      beforeEnter({ current, next }) {
+        setImageSrcPath(next.container);
+        setOrderCompleteContext(next.container);
       },
     },
   ],

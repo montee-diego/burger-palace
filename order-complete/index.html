@@ -19,35 +19,21 @@
     <title>Burger Palace | Review Order</title>
   </head>
   <body data-barba="wrapper">
-    <main data-barba="container" data-barba-namespace="order-review">
+    <main class="order-page" data-barba="container" data-barba-namespace="order-complete">
       <header>
         <nav class="nav-footer-wrapper">
           <h1>Burger Palace</h1>
-          <div class="order-count">
-            <h2>Review Order</h2>
-            <button class="cancel-order">Cancel</button>
-          </div>
+          <button class="order-done">OK</button>
         </nav>
       </header>
 
-      <section class="review-container"></section>
-
-      <footer>
-        <div class="nav-footer-wrapper">
-          <div class="order-price">
-            <h3></h3>
-          </div>
-          <div class="order-controls">
-            <form>
-              <label for="confirm-order" class="confirm-checkbox">
-                <input type="checkbox" id="confirm-order" name="confirm-order" />
-                <span>Looks good!</span>
-              </label>
-            </form>
-            <button class="submit-order" disabled>Order</button>
-          </div>
+      <section class="order-complete">
+        <div class="order-logo">
+          <img data-src="assets/order-complete.svg" alt="" />
         </div>
-      </footer>
+        <p class="order-message">Your order is being prepared!</p>
+        <p class="order-number"></p>
+      </section>
     </main>
 
     <div class="page-anim layer-a">

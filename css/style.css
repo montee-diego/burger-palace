@@ -136,6 +136,10 @@ h1 {
   color: #b83725;
 }
 
+h4 {
+  font-size: 1.1rem;
+}
+
 /* Helper classes */
 
 .nav-footer-wrapper {
@@ -292,7 +296,7 @@ h1 {
   font-family: "Fredoka One", cursive;
   font-size: 1.5rem;
   color: white;
-  background: #b83725;
+  background-color: #b83725;
   position: absolute;
   top: 0;
   left: 0;
@@ -347,6 +351,62 @@ h1 {
   margin: 0rem auto;
   width: 95%;
 } */
+
+.order-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Order review */
+
+.review-container {
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.review-container > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+  border: 2px solid #b83725;
+  border-radius: 5px;
+  padding: 0.5rem 1rem;
+}
+
+.item-price {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.confirm-checkbox {
+  border: none;
+}
+
+/* Order complete */
+
+.order-complete {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.order-complete > p {
+  font-size: 1.2rem;
+}
+
+.order-logo {
+  width: 50%;
+  max-width: 256px;
+}
+
+.order-logo img {
+  width: 100%;
+}
 
 /* Page transition */
 
