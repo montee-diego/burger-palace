@@ -20,15 +20,6 @@ header {
   width: 100%;
 }
 
-/* nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 0rem auto;
-  min-height: 4rem;
-  width: 95%;
-} */
-
 nav > h1 {
   font-size: 2.5rem;
 }
@@ -346,11 +337,6 @@ h4 {
   transform: scale(60%);
   z-index: 1;
 }
-
-/* .order-details {
-  margin: 0rem auto;
-  width: 95%;
-} */
 
 .order-controls {
   display: flex;

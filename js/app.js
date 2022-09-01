@@ -32,6 +32,20 @@ const utilsFormatPrice = price => {
   return Intl.NumberFormat(undefined, { style: "currency", currency: "EUR" }).format(price);
 };
 
+const utilsOrderNumber = () => {
+  return Math.random().toString().substring(2, 6);
+};
+
+// Reusable "Components"
+const setHomeButton = container => {
+  const homeBtn = container.querySelector(".home-btn");
+
+  homeBtn.addEventListener("click", () => {
+    homeBtn.disabled = true;
+    barba.go(rootDir);
+  });
+};
+
 let appData = null;
 let order = {
   items: [],
@@ -107,7 +121,6 @@ const setOrderContext = container => {
   displayPrice.innerText = `Burger ${utilsFormatPrice(options.price)}`;
 
   // Button actions
-  const cancelBtn = container.querySelector(".cancel-order");
   const prevBtn = container.querySelector(".prev-btn");
   const nextBtn = container.querySelector(".next-btn");
   const tabs = container.querySelectorAll(".tab");
@@ -122,16 +135,6 @@ const setOrderContext = container => {
 
     tl.fromTo(leave, menuAnim.out().from, menuAnim.out().to);
     tl.fromTo(enter, menuAnim.in().from, menuAnim.in().to);
-  };
-
-  const handleCancelOrder = () => {
-    cancelBtn.disabled = true;
-
-    barba.go(rootDir);
-
-    setTimeout(() => {
-      cancelBtn.disabled = false;
-    }, 1500);
   };
 
   const handleNextPage = () => {
@@ -224,7 +227,6 @@ const setOrderContext = container => {
     }, 1500);
   };
 
-  cancelBtn.addEventListener("click", handleCancelOrder);
   nextBtn.addEventListener("click", handleNextPage);
   prevBtn.addEventListener("click", handlePrevPage);
 
@@ -354,19 +356,8 @@ const setOrderContext = container => {
 const setOrderReviewContext = container => {
   const orderList = container.querySelector(".review-container");
   const displayPrice = container.querySelector(".order-price h3");
-  const cancelBtn = container.querySelector(".cancel-order");
   const submitBtn = container.querySelector(".submit-order");
   const submitCheck = container.querySelector("#confirm-order");
-
-  const handleCancelOrder = () => {
-    cancelBtn.disabled = true;
-
-    barba.go(rootDir);
-
-    setTimeout(() => {
-      cancelBtn.disabled = false;
-    }, 1500);
-  };
 
   const handleSubmitOrder = () => {
     submitBtn.disabled = true;
@@ -378,7 +369,6 @@ const setOrderReviewContext = container => {
     submitBtn.disabled = !target.checked;
   };
 
-  cancelBtn.addEventListener("click", handleCancelOrder);
   submitBtn.addEventListener("click", handleSubmitOrder);
   submitCheck.addEventListener("change", handleSubmitCheck);
 
@@ -420,19 +410,9 @@ const setOrderReviewContext = container => {
 };
 
 const setOrderCompleteContext = container => {
-  const orderNrDisplay = container.querySelector(".order-number");
-  const orderDoneBtn = container.querySelector(".order-done");
+  const displayOrderNr = container.querySelector(".order-number");
 
-  let orderNumber = (function () {
-    return Math.random().toString().substring(2, 6);
-  })();
-
-  orderNrDisplay.innerText = `Order N° 0${orderNumber}`;
-
-  orderDoneBtn.addEventListener("click", () => {
-    orderDoneBtn.disabled = true;
-    barba.go(rootDir);
-  });
+  displayOrderNr.innerText = `Order N° 0${utilsOrderNumber()}`;
 };
 
 // Barba.js configuration
@@ -456,6 +436,7 @@ barba.init({
       beforeEnter({ current, next }) {
         console.log("beforeEnter: order");
         setAppData();
+        setHomeButton(next.container);
         setImageSrcPath(next.container);
 
         // if (!current.container) {
@@ -470,6 +451,7 @@ barba.init({
     {
       namespace: "order-review",
       beforeEnter({ current, next }) {
+        setHomeButton(next.container);
         setOrderReviewContext(next.container);
       },
     },
@@ -477,6 +459,7 @@ barba.init({
       namespace: "order-complete",
       beforeEnter({ current, next }) {
         setImageSrcPath(next.container);
+        setHomeButton(next.container);
         setOrderCompleteContext(next.container);
       },
     },
