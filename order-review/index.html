@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="../assets/icon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Poppins:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../css/style.css" />
+    <script src="../js/barba.min.js" defer></script>
+    <script src="../js/gsap.min.js" defer></script>
+    <script src="../js/animations.js" defer></script>
+    <script src="../js/app.js" defer></script>
+    <title>Burger Palace | Review Order</title>
+  </head>
+  <body data-barba="wrapper">
+    <main data-barba="container" data-barba-namespace="order-review">
+      <header>
+        <nav class="nav-footer-wrapper">
+          <h1>Burger Palace</h1>
+          <div class="order-count">
+            <h2>Review Order</h2>
+            <button class="cancel-order">Cancel</button>
+          </div>
+        </nav>
+      </header>
+
+      <section class="review-container"></section>
+
+      <footer>
+        <div class="nav-footer-wrapper">
+          <div class="order-price">
+            <h3></h3>
+          </div>
+          <div class="order-controls">
+            <form>
+              <label for="confirm-order">
+                <input type="checkbox" id="confirm-order" name="confirm-order" />
+                <span>Looks good!</span>
+              </label>
+            </form>
+            <button class="submit-order">Order</button>
+          </div>
+        </div>
+      </footer>
+    </main>
+
+    <div class="page-anim layer-a">
+      <span>Burger Palace</span>
+      <img data-src="assets/splash-logo.svg" alt="" />
+    </div>
+    <div class="page-anim layer-b"></div>
+    <div class="page-anim layer-c"></div>
+  </body>
+</html>
