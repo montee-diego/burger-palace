@@ -117,6 +117,29 @@ const setOrderContext = container => {
     },
   };
 
+  const radioInput = {
+    burger: {
+      id: 'input[name="burger-opt"]',
+      initial: null,
+      key: "burger",
+    },
+    cheese: {
+      id: 'input[name="cheese-opt"]',
+      initial: "no-cheese",
+      key: "cheese",
+    },
+    side: {
+      id: 'input[name="side-opts"]',
+      initial: "no-side",
+      key: "side",
+    },
+    drink: {
+      id: 'input[name="drink-opts"]',
+      initial: "no-drink",
+      key: "drink",
+    },
+  };
+
   displayCount.innerText = `Order ${currentOrder}/${order.quantity}`;
   displayPrice.innerText = `Burger ${utilsFormatPrice(options.price)}`;
 
@@ -171,6 +194,31 @@ const setOrderContext = container => {
     }, 1500);
   };
 
+  const setRadioDefault = (radio, anim) => {
+    const inputs = container.querySelectorAll(radio.id);
+    const current = options[radio.key];
+
+    inputs[0].checked = true;
+
+    if (current !== radio.initial) {
+      gsap.fromTo(`.${current}`, 0.5, anim.out().from, anim.out().to);
+
+      if (radio.key === "side") {
+        gsap.fromTo(`.bbq`, 0.5, sidesBbqAnim.out().from, sidesBbqAnim.out().to);
+      }
+
+      options.setPrice = options.price - appData[current].price;
+    }
+
+    if (radio.key === "side") {
+      gsap.fromTo(".bread-top", 0.5, breadAnim.out().from, breadAnim.out().to);
+    } else if (radio.key === "drink") {
+      nextBtn.innerText = "Next";
+    }
+
+    options[radio.key] = radio.initial;
+  };
+
   const handlePrevPage = () => {
     prevBtn.disabled = true;
 
@@ -178,14 +226,15 @@ const setOrderContext = container => {
     handleMenuSwitch(tabs[options.page + 1], tabs[options.page]);
 
     if (options.page === 0) {
-      inputCheese[0].checked = true;
+      setRadioDefault(radioInput.cheese, cheeseAnim);
+      // inputCheese[0].checked = true;
 
-      if (options.cheese === "swiss" || options.cheese === "cheddar") {
-        gsap.fromTo(`.${options.cheese}`, 0.5, cheeseAnim.out().from, cheeseAnim.out().to);
-        options.setPrice = options.price - appData[options.cheese].price;
-      }
+      // if (options.cheese === "swiss" || options.cheese === "cheddar") {
+      //   gsap.fromTo(`.${options.cheese}`, 0.5, cheeseAnim.out().from, cheeseAnim.out().to);
+      //   options.setPrice = options.price - appData[options.cheese].price;
+      // }
 
-      options.cheese = "no-cheese";
+      // options.cheese = "no-cheese";
     } else if (options.page === 1) {
       let price = 0;
 
@@ -198,26 +247,28 @@ const setOrderContext = container => {
       options.setPrice = options.price - price;
       gsap.to(".extra", 0.5, { opacity: 0 });
     } else if (options.page === 2) {
-      inputSides[0].checked = true;
+      // inputSides[0].checked = true;
 
-      if (options.side === "fries") {
-        gsap.fromTo(`.${options.side}`, 0.5, sidesAnim.out().from, sidesAnim.out().to);
-        gsap.fromTo(`.bbq`, 0.5, sidesBbqAnim.out().from, sidesBbqAnim.out().to);
-        options.setPrice = options.price - appData[options.side].price;
-      }
+      // if (options.side === "fries") {
+      //   gsap.fromTo(`.${options.side}`, 0.5, sidesAnim.out().from, sidesAnim.out().to);
+      //   gsap.fromTo(`.bbq`, 0.5, sidesBbqAnim.out().from, sidesBbqAnim.out().to);
+      //   options.setPrice = options.price - appData[options.side].price;
+      // }
 
-      gsap.fromTo(".bread-top", 0.5, breadAnim.out().from, breadAnim.out().to);
-      options.side = "no-side";
+      // gsap.fromTo(".bread-top", 0.5, breadAnim.out().from, breadAnim.out().to);
+      // options.side = "no-side";
+      setRadioDefault(radioInput.side, sidesAnim);
     } else if (options.page === 3) {
-      inputDrink[0].checked = true;
+      setRadioDefault(radioInput.drink, drinkAnim);
+      // inputDrink[0].checked = true;
 
-      if (options.drink && options.drink !== "no-drink") {
-        gsap.fromTo(`.${options.drink}`, 0.5, drinkAnim.out().from, drinkAnim.out().to);
-        options.setPrice = options.price - appData[options.drink].price;
-      }
+      // if (options.drink && options.drink !== "no-drink") {
+      //   gsap.fromTo(`.${options.drink}`, 0.5, drinkAnim.out().from, drinkAnim.out().to);
+      //   options.setPrice = options.price - appData[options.drink].price;
+      // }
 
-      options.drink = "no-drink";
-      nextBtn.innerText = "Next";
+      // options.drink = "no-drink";
+      // nextBtn.innerText = "Next";
     }
 
     setTimeout(() => {
@@ -230,46 +281,86 @@ const setOrderContext = container => {
   nextBtn.addEventListener("click", handleNextPage);
   prevBtn.addEventListener("click", handlePrevPage);
 
-  // Option: Burger
-  const inputBurger = container.querySelectorAll('input[name="burger-opt"]');
+  const setRadioOptions = (radio, anim) => {
+    const inputs = container.querySelectorAll(radio.id);
 
-  const handleBurgerInput = ({ target }) => {
-    if (options.burger) {
-      gsap.fromTo(`.${options.burger}`, 0.5, burgerAnim.out().from, burgerAnim.out().to);
-      options.setPrice = options.price - appData[options.burger].price;
-    } else {
-      nextBtn.disabled = false;
-    }
+    const handleRadioInput = ({ target }) => {
+      const current = options[radio.key];
 
-    gsap.fromTo(`.${target.value}`, 0.5, burgerAnim.in().from, burgerAnim.in().to);
-    options.burger = target.value;
-    options.setPrice = options.price + appData[options.burger].price;
+      if (current !== radio.initial) {
+        gsap.fromTo(`.${current}`, 0.5, anim.out().from, anim.out().to);
+
+        if (radio.key === "side") {
+          gsap.fromTo(`.bbq`, 0.5, sidesBbqAnim.out().from, sidesBbqAnim.out().to);
+        }
+
+        options.setPrice = options.price - appData[current].price;
+      } else {
+        nextBtn.disabled = false;
+      }
+
+      if (target.value !== radio.initial) {
+        gsap.fromTo(`.${target.value}`, 0.5, anim.in().from, anim.in().to);
+
+        if (radio.key === "side") {
+          gsap.fromTo(`.bbq`, 0.5, sidesBbqAnim.in().from, sidesBbqAnim.in().to);
+        }
+      }
+
+      options[radio.key] = target.value;
+      options.setPrice = options.price + appData[target.value].price;
+    };
+
+    inputs.forEach(input => {
+      input.addEventListener("change", handleRadioInput);
+    });
   };
 
-  inputBurger.forEach(input => {
-    input.addEventListener("change", handleBurgerInput);
-  });
+  setRadioOptions(radioInput.burger, burgerAnim);
+  setRadioOptions(radioInput.cheese, cheeseAnim);
+  setRadioOptions(radioInput.side, sidesAnim);
+  setRadioOptions(radioInput.drink, drinkAnim);
+
+  // Option: Burger
+  // const inputBurger = container.querySelectorAll('input[name="burger-opt"]');
+
+  // const handleBurgerInput = ({ target }) => {
+  //   if (options.burger) {
+  //     gsap.fromTo(`.${options.burger}`, 0.5, burgerAnim.out().from, burgerAnim.out().to);
+  //     options.setPrice = options.price - appData[options.burger].price;
+  //   } else {
+  //     nextBtn.disabled = false;
+  //   }
+
+  //   gsap.fromTo(`.${target.value}`, 0.5, burgerAnim.in().from, burgerAnim.in().to);
+  //   options.burger = target.value;
+  //   options.setPrice = options.price + appData[options.burger].price;
+  // };
+
+  // inputBurger.forEach(input => {
+  //   input.addEventListener("change", handleBurgerInput);
+  // });
 
   // Option: Cheese
-  const inputCheese = container.querySelectorAll('input[name="cheese-opt"]');
+  // const inputCheese = container.querySelectorAll('input[name="cheese-opt"]');
 
-  const handleCheeseInput = ({ target }) => {
-    if (options.cheese !== "no-cheese") {
-      gsap.fromTo(`.${options.cheese}`, 0.5, cheeseAnim.out().from, cheeseAnim.out().to);
-      options.setPrice = options.price - appData[options.cheese].price;
-    }
+  // const handleCheeseInput = ({ target }) => {
+  //   if (options.cheese !== "no-cheese") {
+  //     gsap.fromTo(`.${options.cheese}`, 0.5, cheeseAnim.out().from, cheeseAnim.out().to);
+  //     options.setPrice = options.price - appData[options.cheese].price;
+  //   }
 
-    if (target.value !== "no-cheese") {
-      gsap.fromTo(`.${target.value}`, 0.5, cheeseAnim.in().from, cheeseAnim.in().to);
-    }
+  //   if (target.value !== "no-cheese") {
+  //     gsap.fromTo(`.${target.value}`, 0.5, cheeseAnim.in().from, cheeseAnim.in().to);
+  //   }
 
-    options.cheese = target.value;
-    options.setPrice = options.price + appData[options.cheese].price;
-  };
+  //   options.cheese = target.value;
+  //   options.setPrice = options.price + appData[options.cheese].price;
+  // };
 
-  inputCheese.forEach(input => {
-    input.addEventListener("change", handleCheeseInput);
-  });
+  // inputCheese.forEach(input => {
+  //   input.addEventListener("change", handleCheeseInput);
+  // });
 
   // Options: Extras
   const inputExtras = container.querySelectorAll('input[type="checkbox"]');
@@ -309,48 +400,48 @@ const setOrderContext = container => {
   });
 
   // Option: Sides
-  const inputSides = container.querySelectorAll('input[name="side-opts"]');
+  // const inputSides = container.querySelectorAll('input[name="side-opts"]');
 
-  const handleSidesInput = ({ target }) => {
-    if (options.side !== "no-side") {
-      gsap.fromTo(`.${options.side}`, 0.5, sidesAnim.out().from, sidesAnim.out().to);
-      gsap.fromTo(`.bbq`, 0.5, sidesBbqAnim.out().from, sidesBbqAnim.out().to);
-      options.setPrice = options.price - appData[options.side].price;
-    }
+  // const handleSidesInput = ({ target }) => {
+  //   if (options.side !== "no-side") {
+  //     gsap.fromTo(`.${options.side}`, 0.5, sidesAnim.out().from, sidesAnim.out().to);
+  //     gsap.fromTo(`.bbq`, 0.5, sidesBbqAnim.out().from, sidesBbqAnim.out().to);
+  //     options.setPrice = options.price - appData[options.side].price;
+  //   }
 
-    if (target.value !== "no-side") {
-      gsap.fromTo(`.${target.value}`, 0.5, sidesAnim.in().from, sidesAnim.in().to);
-      gsap.fromTo(`.bbq`, 0.5, sidesBbqAnim.in().from, sidesBbqAnim.in().to);
-    }
+  //   if (target.value !== "no-side") {
+  //     gsap.fromTo(`.${target.value}`, 0.5, sidesAnim.in().from, sidesAnim.in().to);
+  //     gsap.fromTo(`.bbq`, 0.5, sidesBbqAnim.in().from, sidesBbqAnim.in().to);
+  //   }
 
-    options.side = target.value;
-    options.setPrice = options.price + appData[options.side].price;
-  };
+  //   options.side = target.value;
+  //   options.setPrice = options.price + appData[options.side].price;
+  // };
 
-  inputSides.forEach(input => {
-    input.addEventListener("change", handleSidesInput);
-  });
+  // inputSides.forEach(input => {
+  //   input.addEventListener("change", handleSidesInput);
+  // });
 
   // Options: Drinks
-  const inputDrink = container.querySelectorAll('input[name="drink-opts"]');
+  // const inputDrink = container.querySelectorAll('input[name="drink-opts"]');
 
-  const handleDrinkInput = ({ target }) => {
-    if (options.drink !== "no-drink") {
-      gsap.fromTo(`.${options.drink}`, 0.5, drinkAnim.out().from, drinkAnim.out().to);
-      options.setPrice = options.price - appData[options.drink].price;
-    }
+  // const handleDrinkInput = ({ target }) => {
+  //   if (options.drink !== "no-drink") {
+  //     gsap.fromTo(`.${options.drink}`, 0.5, drinkAnim.out().from, drinkAnim.out().to);
+  //     options.setPrice = options.price - appData[options.drink].price;
+  //   }
 
-    if (target.value !== "no-drink") {
-      gsap.fromTo(`.${target.value}`, 0.5, drinkAnim.in().from, drinkAnim.in().to);
-    }
+  //   if (target.value !== "no-drink") {
+  //     gsap.fromTo(`.${target.value}`, 0.5, drinkAnim.in().from, drinkAnim.in().to);
+  //   }
 
-    options.drink = target.value;
-    options.setPrice = options.price + appData[options.drink].price;
-  };
+  //   options.drink = target.value;
+  //   options.setPrice = options.price + appData[options.drink].price;
+  // };
 
-  inputDrink.forEach(input => {
-    input.addEventListener("change", handleDrinkInput);
-  });
+  // inputDrink.forEach(input => {
+  //   input.addEventListener("change", handleDrinkInput);
+  // });
 };
 
 const setOrderReviewContext = container => {
