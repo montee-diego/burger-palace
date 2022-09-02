@@ -359,6 +359,7 @@ h4 {
   background-color: white;
   border: 2px solid #b83725;
   border-radius: 5px;
+  gap: 1rem;
   padding: 0.5rem 1rem;
 }
 

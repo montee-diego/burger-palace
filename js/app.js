@@ -59,10 +59,9 @@ const setAppData = () => {
     .then(res => res.json())
     .then(data => {
       appData = data;
-      console.log(appData);
     })
     .catch(error => {
-      console.log(error);
+      alert("There was an error fetching application data. Please refresh the page.");
     });
 };
 
@@ -90,7 +89,7 @@ const setHomeContext = container => {
   const handleBeginOrder = event => {
     event.preventDefault();
     order.quantity = parseInt(curOrder.value);
-    barba.go("./order");
+    barba.go(rootDir + "order");
   };
 
   decreaseOrderBtn.addEventListener("click", handleOrderDecrease);
@@ -166,23 +165,25 @@ const setOrderContext = container => {
     options.page += 1;
     handleMenuSwitch(tabs[options.page - 1], tabs[options.page]);
 
-    if (options.page === 3) {
-      const idx = options.extras.length;
+    switch (options.page) {
+      case 3:
+        const idx = options.extras.length;
 
-      gsap.fromTo(".bread-top", 0.5, breadAnim.in(idx).from, breadAnim.in(idx).to);
-    } else if (options.page === 4) {
-      nextBtn.innerText = "Done";
-    } else if (options.page === 5) {
-      order.items.push(options);
-      order.total += options.price;
+        gsap.fromTo(".bread-top", 0.5, breadAnim.in(idx).from, breadAnim.in(idx).to);
+        break;
+      case 4:
+        nextBtn.innerText = "Done";
+        break;
+      case 5:
+        order.items.push(options);
+        order.total += options.price;
 
-      console.log(order);
-
-      if (order.items.length === order.quantity) {
-        barba.go("./order-review");
-      } else {
-        barba.go("./order");
-      }
+        if (order.items.length === order.quantity) {
+          barba.go(rootDir + "order-review");
+        } else {
+          barba.go(rootDir + "order");
+        }
+        break;
     }
 
     setTimeout(() => {
@@ -225,50 +226,31 @@ const setOrderContext = container => {
     options.page -= 1;
     handleMenuSwitch(tabs[options.page + 1], tabs[options.page]);
 
-    if (options.page === 0) {
-      setRadioDefault(radioInput.cheese, cheeseAnim);
-      // inputCheese[0].checked = true;
+    switch (options.page) {
+      case 0:
+        setRadioDefault(radioInput.cheese, cheeseAnim);
+        break;
+      case 1:
+        const price = (sum => {
+          options.extras.forEach(extra => {
+            sum += appData[extra].price;
+          });
 
-      // if (options.cheese === "swiss" || options.cheese === "cheddar") {
-      //   gsap.fromTo(`.${options.cheese}`, 0.5, cheeseAnim.out().from, cheeseAnim.out().to);
-      //   options.setPrice = options.price - appData[options.cheese].price;
-      // }
+          return sum;
+        })(0);
 
-      // options.cheese = "no-cheese";
-    } else if (options.page === 1) {
-      let price = 0;
+        inputExtras.forEach(input => (input.checked = false));
 
-      inputExtras.forEach(input => (input.checked = false));
-      options.extras.forEach(extra => {
-        price += appData[extra].price;
-      });
-
-      options.extras = [];
-      options.setPrice = options.price - price;
-      gsap.to(".extra", 0.5, { opacity: 0 });
-    } else if (options.page === 2) {
-      // inputSides[0].checked = true;
-
-      // if (options.side === "fries") {
-      //   gsap.fromTo(`.${options.side}`, 0.5, sidesAnim.out().from, sidesAnim.out().to);
-      //   gsap.fromTo(`.bbq`, 0.5, sidesBbqAnim.out().from, sidesBbqAnim.out().to);
-      //   options.setPrice = options.price - appData[options.side].price;
-      // }
-
-      // gsap.fromTo(".bread-top", 0.5, breadAnim.out().from, breadAnim.out().to);
-      // options.side = "no-side";
-      setRadioDefault(radioInput.side, sidesAnim);
-    } else if (options.page === 3) {
-      setRadioDefault(radioInput.drink, drinkAnim);
-      // inputDrink[0].checked = true;
-
-      // if (options.drink && options.drink !== "no-drink") {
-      //   gsap.fromTo(`.${options.drink}`, 0.5, drinkAnim.out().from, drinkAnim.out().to);
-      //   options.setPrice = options.price - appData[options.drink].price;
-      // }
-
-      // options.drink = "no-drink";
-      // nextBtn.innerText = "Next";
+        options.extras = [];
+        options.setPrice = options.price - price;
+        gsap.to(".extra", 0.5, { opacity: 0 });
+        break;
+      case 2:
+        setRadioDefault(radioInput.side, sidesAnim);
+        break;
+      case 3:
+        setRadioDefault(radioInput.drink, drinkAnim);
+        break;
     }
 
     setTimeout(() => {
@@ -321,47 +303,6 @@ const setOrderContext = container => {
   setRadioOptions(radioInput.side, sidesAnim);
   setRadioOptions(radioInput.drink, drinkAnim);
 
-  // Option: Burger
-  // const inputBurger = container.querySelectorAll('input[name="burger-opt"]');
-
-  // const handleBurgerInput = ({ target }) => {
-  //   if (options.burger) {
-  //     gsap.fromTo(`.${options.burger}`, 0.5, burgerAnim.out().from, burgerAnim.out().to);
-  //     options.setPrice = options.price - appData[options.burger].price;
-  //   } else {
-  //     nextBtn.disabled = false;
-  //   }
-
-  //   gsap.fromTo(`.${target.value}`, 0.5, burgerAnim.in().from, burgerAnim.in().to);
-  //   options.burger = target.value;
-  //   options.setPrice = options.price + appData[options.burger].price;
-  // };
-
-  // inputBurger.forEach(input => {
-  //   input.addEventListener("change", handleBurgerInput);
-  // });
-
-  // Option: Cheese
-  // const inputCheese = container.querySelectorAll('input[name="cheese-opt"]');
-
-  // const handleCheeseInput = ({ target }) => {
-  //   if (options.cheese !== "no-cheese") {
-  //     gsap.fromTo(`.${options.cheese}`, 0.5, cheeseAnim.out().from, cheeseAnim.out().to);
-  //     options.setPrice = options.price - appData[options.cheese].price;
-  //   }
-
-  //   if (target.value !== "no-cheese") {
-  //     gsap.fromTo(`.${target.value}`, 0.5, cheeseAnim.in().from, cheeseAnim.in().to);
-  //   }
-
-  //   options.cheese = target.value;
-  //   options.setPrice = options.price + appData[options.cheese].price;
-  // };
-
-  // inputCheese.forEach(input => {
-  //   input.addEventListener("change", handleCheeseInput);
-  // });
-
   // Options: Extras
   const inputExtras = container.querySelectorAll('input[type="checkbox"]');
 
@@ -398,50 +339,6 @@ const setOrderContext = container => {
   inputExtras.forEach(input => {
     input.addEventListener("click", handleExtrasInput);
   });
-
-  // Option: Sides
-  // const inputSides = container.querySelectorAll('input[name="side-opts"]');
-
-  // const handleSidesInput = ({ target }) => {
-  //   if (options.side !== "no-side") {
-  //     gsap.fromTo(`.${options.side}`, 0.5, sidesAnim.out().from, sidesAnim.out().to);
-  //     gsap.fromTo(`.bbq`, 0.5, sidesBbqAnim.out().from, sidesBbqAnim.out().to);
-  //     options.setPrice = options.price - appData[options.side].price;
-  //   }
-
-  //   if (target.value !== "no-side") {
-  //     gsap.fromTo(`.${target.value}`, 0.5, sidesAnim.in().from, sidesAnim.in().to);
-  //     gsap.fromTo(`.bbq`, 0.5, sidesBbqAnim.in().from, sidesBbqAnim.in().to);
-  //   }
-
-  //   options.side = target.value;
-  //   options.setPrice = options.price + appData[options.side].price;
-  // };
-
-  // inputSides.forEach(input => {
-  //   input.addEventListener("change", handleSidesInput);
-  // });
-
-  // Options: Drinks
-  // const inputDrink = container.querySelectorAll('input[name="drink-opts"]');
-
-  // const handleDrinkInput = ({ target }) => {
-  //   if (options.drink !== "no-drink") {
-  //     gsap.fromTo(`.${options.drink}`, 0.5, drinkAnim.out().from, drinkAnim.out().to);
-  //     options.setPrice = options.price - appData[options.drink].price;
-  //   }
-
-  //   if (target.value !== "no-drink") {
-  //     gsap.fromTo(`.${target.value}`, 0.5, drinkAnim.in().from, drinkAnim.in().to);
-  //   }
-
-  //   options.drink = target.value;
-  //   options.setPrice = options.price + appData[options.drink].price;
-  // };
-
-  // inputDrink.forEach(input => {
-  //   input.addEventListener("change", handleDrinkInput);
-  // });
 };
 
 const setOrderReviewContext = container => {
@@ -453,7 +350,7 @@ const setOrderReviewContext = container => {
   const handleSubmitOrder = () => {
     submitBtn.disabled = true;
 
-    barba.go("./order-complete");
+    barba.go(rootDir + "order-complete");
   };
 
   const handleSubmitCheck = ({ target }) => {
@@ -513,19 +410,14 @@ barba.init({
     {
       namespace: "home",
       beforeEnter({ next }) {
-        console.log("beforeEnter: home");
         setAppData();
         setImageSrcPath(next.container);
         setHomeContext(next.container);
-      },
-      beforeLeave({ next }) {
-        console.log("beforeLeave: home");
       },
     },
     {
       namespace: "order",
       beforeEnter({ current, next }) {
-        console.log("beforeEnter: order");
         setAppData();
         setHomeButton(next.container);
         setImageSrcPath(next.container);
