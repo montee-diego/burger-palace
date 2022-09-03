@@ -20,7 +20,7 @@ header {
   width: 100%;
 }
 
-nav > h1 {
+h1 {
   font-size: 2.5rem;
 }
 
@@ -236,6 +236,7 @@ h4 {
   background-color: white;
   border: 2px solid #b83725;
   text-align: center;
+  padding: 0.5rem 0rem;
 }
 
 #nr-of-orders:focus {
@@ -275,6 +276,7 @@ h4 {
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 100%;
   width: 100%;
   background-color: white;
   border-radius: 5px;
@@ -452,6 +454,25 @@ h4 {
 
 /* Mobile */
 @media screen and (max-width: 768px) {
+  section,
+  .review-container {
+    flex-direction: column-reverse;
+    justify-content: flex-end;
+  }
+
+  nav > h1 {
+    display: none;
+  }
+
+  button {
+    width: 5rem;
+  }
+
+  .order-count {
+    justify-content: space-between;
+    width: 100%;
+  }
+
   .logo > h1 {
     font-size: 9vw;
     transform: translateX(-30%);
@@ -467,5 +488,25 @@ h4 {
 
   .frie-anim-wrapper {
     max-width: 15%;
+  }
+
+  .order-panel {
+    height: calc(100vh - 8rem);
+    overflow-y: auto;
+  }
+
+  .order-opts {
+    min-height: 100px;
+    max-height: 65%;
+    overflow-y: auto;
+  }
+
+  .order-preview-container {
+    min-height: 240px;
+    max-height: 25%;
+  }
+
+  .page-anim img {
+    width: 65%;
   }
 }
