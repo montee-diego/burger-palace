@@ -23,7 +23,7 @@ fonts, colors, images and animations, was created with the idea to appeal to you
 ## Compatibility
 
 - Tested on desktop: Firefox, Chrome and Edge
-- Tested on mobile:
+- Tested on mobile: Firefox and Chrome
 
 ## Comments
 
