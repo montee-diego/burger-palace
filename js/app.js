@@ -418,32 +418,45 @@ barba.init({
     {
       namespace: "order",
       beforeEnter({ current, next }) {
-        setAppData();
         setHomeButton(next.container);
         setImageSrcPath(next.container);
 
-        // if (!current.container) {
-        //   window.setTimeout(() => {
-        //     barba.go(rootDir);
-        //   }, 2500);
-        // }
-
-        setOrderContext(next.container);
+        if (!current.container) {
+          window.setTimeout(() => {
+            barba.go(rootDir);
+          }, 500);
+        } else {
+          setOrderContext(next.container);
+        }
       },
     },
     {
       namespace: "order-review",
       beforeEnter({ current, next }) {
         setHomeButton(next.container);
-        setOrderReviewContext(next.container);
+
+        if (!current.container) {
+          window.setTimeout(() => {
+            barba.go(rootDir);
+          }, 500);
+        } else {
+          setOrderReviewContext(next.container);
+        }
       },
     },
     {
       namespace: "order-complete",
       beforeEnter({ current, next }) {
-        setImageSrcPath(next.container);
         setHomeButton(next.container);
-        setOrderCompleteContext(next.container);
+        setImageSrcPath(next.container);
+
+        if (!current.container) {
+          window.setTimeout(() => {
+            barba.go(rootDir);
+          }, 500);
+        } else {
+          setOrderCompleteContext(next.container);
+        }
       },
     },
   ],
